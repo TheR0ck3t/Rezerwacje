@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: './.env' });
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -19,10 +19,15 @@ const PORT = process.env.PORT;
 
 // Config
 app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '.public')));
+
+app.get('/test', (req, res) => {
+    res.render('index');
+});
 
 // Dynamic route loading
 const routesPath = path.join(__dirname, 'routes');
