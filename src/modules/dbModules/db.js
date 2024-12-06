@@ -9,4 +9,14 @@ const db = pgp({
     password: process.env.DB_PASSWORD,
 });
 
+// Test setup
+db.connect()
+    .then((obj) => {
+        obj.done();
+        console.log('Connected to the database: ' + db.$cn.database + ' on ' + db.$cn.host + ':' + db.$cn.port);
+    })
+    .catch((error) => {
+        console.log('Databace connection failed:', error.message || error);
+    });
+
 module.exports = db;

@@ -4,11 +4,15 @@ const router = express.Router();
 
 // Static routes
 router.get('/', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'public/index.html'));
+    res.render(path.resolve(__dirname, '../../views/pages/index'));
+});
+
+router.get('/about', (req, res) => {
+    res.render(path.resolve(__dirname, '../../views/pages/about'));
 });
 
 
 module.exports = {
-    path: '/public/public',
+    path: '/',
     router
 }
