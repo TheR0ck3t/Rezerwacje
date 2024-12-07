@@ -77,5 +77,6 @@ router.post('/', async(req, res) => {
 
 module.exports = {
     path: '/auth/login',
-    router
+    router,
+    routeName: 'login'
 };

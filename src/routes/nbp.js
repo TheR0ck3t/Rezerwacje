@@ -24,5 +24,6 @@ router.get('/', async(req, res) => {
 
 module.exports = {
     path: '/nbp',
-    router
+    router,
+    routeName: 'nbp'
 };

@@ -23,7 +23,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-//app.use(express.static(path.join(__dirname, '.public')));
 
 
 
@@ -35,10 +34,10 @@ const loadRoutes = (dirPath) => {
         if (fs.statSync(fullPath).isDirectory()) {
             loadRoutes(fullPath); // Rekurencja dla podfolderów
         } else {
-            const { path: routePath, router } = require(fullPath);
+            const { path: routePath, router, routeName } = require(fullPath);
             if (routePath && router) {
                 app.use(routePath, router);
-                console.log(`Loaded route: ${routePath}`);
+                console.log(`Loaded route: ${routeName} path: ${routePath}`);
             } else {
                 console.error(`Invalid route export in: ${fullPath}`);
             }

@@ -120,5 +120,6 @@ router.post('/status/:userId', async(req, res) => {
 
 module.exports = {
     path: '/auth/2fa',
-    router
+    router,
+    routeName: '2fa'
 }

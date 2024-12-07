@@ -10,6 +10,60 @@
     </ul>
     <div class="col-sm-4 text-end">
         <button type="button" class="btn btn-transparent fw-bold text-white btn-primary" id="login">LOG IN</button>
-        <button type="button" class="btn fw-bold text-white btn-secondary" id="signUP">SIGN UP</button>
+        <button type="button" class="btn fw-bold text-white btn-secondary" id="register">Register</button>
     </div>
 </div>
+
+<div id="form-container"></div>
+
+<script>
+    document.getElementById('login').addEventListener('click', () => {
+        const formContainer = document.getElementById('form-container');
+
+        fetch('/loginForm')
+            .then(res => res.text())
+            .then(html => {
+                // Parse the response HTML string into a DOM structure
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const form = doc.querySelector('form'); // Select the form element from the fetched HTML
+
+                // Clear any existing content and append the form
+                formContainer.innerHTML = ''; // Safe to clear everything
+                formContainer.appendChild(form);
+
+                // Attach the Cancel button functionality
+                form.addEventListener('reset', () => {
+                    console.log('Cancel clicked');
+                    formContainer.innerHTML = ''; // Safely remove the form
+                });
+
+            })
+            .catch(err => console.error('Error loading the form:', err));
+    });
+
+    document.getElementById('register').addEventListener('click', () => {
+        const formContainer = document.getElementById('form-container');
+
+        fetch('/registerForm')
+            .then(res => res.text())
+            .then(html => {
+                // Parse the response HTML string into a DOM structure
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const form = doc.querySelector('form'); // Select the form element from the fetched HTML
+
+                // Clear any existing content and append the form
+                formContainer.innerHTML = '';
+                formContainer.appendChild(form);
+
+                // Attach the Cancel button functionality
+                form.addEventListener('reset', () => {
+                    console.log('Cancel clicked');
+                    formContainer.innerHTML = '';
+                });
+
+            })
+            .catch(err => console.error('Error loading the form:', err));
+    });
+</script>

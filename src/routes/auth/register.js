@@ -34,6 +34,9 @@ router.post('/', async(req, res) => {
         // Send JWT token and userId as response
         return res.status(200).json({ message: 'User registered successfully', user: newUser, token, userId });
 
+        // Send verification email
+
+
     } catch (error) {
         console.error('Error registering user:', error);
         return res.status(500).json({ error: 'Something went wrong' });
@@ -43,5 +46,6 @@ router.post('/', async(req, res) => {
 
 module.exports = {
     path: '/auth/register',
-    router
+    router,
+    routeName: 'register'
 };
