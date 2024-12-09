@@ -7,7 +7,6 @@ router.get('/dashboard', authToken, (req, res) => {
     res.render(path.resolve(__dirname, '../../views/protected/dashboard'));
 });
 
-
 module.exports = {
     path: '/',
     router,

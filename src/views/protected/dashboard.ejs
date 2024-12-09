@@ -7,6 +7,29 @@
 
 <body>
     <h1>BARK!</h1>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const token = localStorage.getItem('token');
+            if (token) {
+                axios.get('/dashboard', {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                    .then(response => {
+                        document.documentElement.innerHTML = response.data;
+                    })
+                    .catch(error => {
+                        console.error('Error accessing dashboard:', error.response ? error.response.data : error.message);
+                        window.location.href = '/login'; // Przekieruj na stronę logowania w przypadku błędu
+                    });
+            } else {
+                console.error('No token found in localStorage');
+                window.location.href = '/login'; // Przekieruj na stronę logowania, jeśli token nie jest dostępny
+            }
+        });
+    </script>
 </body>
 
 </html>

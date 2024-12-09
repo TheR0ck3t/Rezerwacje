@@ -41,29 +41,4 @@
             })
             .catch(err => console.error('Error loading the form:', err));
     });
-
-    document.getElementById('register').addEventListener('click', () => {
-        const formContainer = document.getElementById('form-container');
-
-        fetch('/registerForm')
-            .then(res => res.text())
-            .then(html => {
-                // Parse the response HTML string into a DOM structure
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const form = doc.querySelector('form'); // Select the form element from the fetched HTML
-
-                // Clear any existing content and append the form
-                formContainer.innerHTML = '';
-                formContainer.appendChild(form);
-
-                // Attach the Cancel button functionality
-                form.addEventListener('reset', () => {
-                    console.log('Cancel clicked');
-                    formContainer.innerHTML = '';
-                });
-
-            })
-            .catch(err => console.error('Error loading the form:', err));
-    });
 </script>

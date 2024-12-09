@@ -19,6 +19,10 @@ router.get('/registerForm', (req, res) => {
     res.render(path.resolve(__dirname, '../../views/partials/forms/register.ejs'));
 });
 
+router.get('/twoFaModal', (req, res) => {
+    res.render(path.resolve(__dirname, '../../views/partials/modals/twoFaModal.ejs'));
+});
+
 module.exports = {
     path: '/',
     router,
