@@ -15,30 +15,3 @@
 </div>
 
 <div id="form-container"></div>
-
-<script>
-    document.getElementById('login').addEventListener('click', () => {
-        const formContainer = document.getElementById('form-container');
-
-        fetch('/loginForm')
-            .then(res => res.text())
-            .then(html => {
-                // Parse the response HTML string into a DOM structure
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const form = doc.querySelector('form'); // Select the form element from the fetched HTML
-
-                // Clear any existing content and append the form
-                formContainer.innerHTML = ''; // Safe to clear everything
-                formContainer.appendChild(form);
-
-                // Attach the Cancel button functionality
-                form.addEventListener('reset', () => {
-                    console.log('Cancel clicked');
-                    formContainer.innerHTML = ''; // Safely remove the form
-                });
-
-            })
-            .catch(err => console.error('Error loading the form:', err));
-    });
-</script>

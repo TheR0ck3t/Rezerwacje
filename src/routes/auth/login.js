@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../../modules/dbModules/db');
 const jwt = require('jsonwebtoken');
-const { comparePassword, compareEmail } = require('../../modules/authModules/userAuth');
+const { comparePasswords, compareEmail } = require('../../modules/authModules/userAuth');
 const { TOTP } = require('otpauth');
 
 // Login 
@@ -24,7 +24,7 @@ router.post('/', async(req, res) => {
 
 
         // Compare password
-        const isMatch = await comparePassword(password, user.password);
+        const isMatch = await comparePasswords(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }

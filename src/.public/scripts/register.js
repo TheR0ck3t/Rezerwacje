@@ -44,8 +44,7 @@ addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('userId', data.userId);
                         localStorage.setItem('token', data.token);
                         console.log(data.userId, data.token);
-
-
+                        window.location.href = '/dashboard';
                     }
                 } catch (error) {
                     console.error('Error registering:', error);
