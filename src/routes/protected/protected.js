@@ -4,8 +4,12 @@ const path = require('path');
 const authToken = require('../../modules/authModules/authToken');
 
 router.get('/dashboard', authToken, (req, res) => {
-    console.log('test');
     res.render(path.resolve(__dirname, '../../views/protected/dashboard.ejs'));
+});
+
+router.get('/user', authToken, (req, res) => {
+    const user = req.user; // Assuming `authenticate` middleware validates JWT from cookies and attaches the user
+    res.status(200).json({ message: `Welcome back, ${user.email}!` });
 });
 
 module.exports = {

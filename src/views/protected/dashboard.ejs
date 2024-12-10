@@ -3,33 +3,19 @@
 
 <head>
     <%- include('../partials/head.ejs') %>
+
 </head>
 
 <body>
-    <h1>BARK!</h1>
+    <%- include('../partials/loggedIn/header.ejs') %>
+        <h1>BARK!</h1>
+        <p id="greeting"></p>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const token = localStorage.getItem('token');
-            if (token) {
-                axios.get('/dashboard', {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    })
-                    .then(response => {
-                        document.documentElement.innerHTML = response.data;
-                    })
-                    .catch(error => {
-                        console.error('Error accessing dashboard:', error.response ? error.response.data : error.message);
-                        window.location.href = '/login'; // Przekieruj na stronę logowania w przypadku błędu
-                    });
-            } else {
-                console.error('No token found in localStorage');
-                window.location.href = '/login'; // Przekieruj na stronę logowania, jeśli token nie jest dostępny
-            }
-        });
-    </script>
+        <button id="enable-2fa">Enable 2FA</button>
+        <img alt="Scan QR Code" id="qrcode" style="display: none;">
+
+        <script src="/scripts/dashboard.js"></script>
+        <script src="/scripts/enable2fa.js"></script>
 </body>
 
 </html>

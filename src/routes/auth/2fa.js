@@ -26,7 +26,7 @@ router.post('/enable', async(req, res) => {
             digits: 6,
             period: 30,
         });
-        const secret = totp.secret();
+        const secret = totp.secret.base32;
         const otpauthURL = totp.toString();
 
         // Hash the secret

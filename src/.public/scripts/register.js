@@ -41,8 +41,6 @@ addEventListener('DOMContentLoaded', () => {
                         throw new Error(`Failed to register. ${registerResponse.statusText}`);
                     } else {
                         const data = registerResponse.data;
-                        localStorage.setItem('userId', data.userId);
-                        localStorage.setItem('token', data.token);
                         console.log(data.userId, data.token);
                         window.location.href = '/dashboard';
                     }

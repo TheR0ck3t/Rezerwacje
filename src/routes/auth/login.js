@@ -15,13 +15,11 @@ router.post('/', async(req, res) => {
         return res.status(400).json({ error: 'Missing email or password' });
     }
     try {
-
         // Check if user exists
         const user = await db.oneOrNone('SELECT * FROM users WHERE email = $1', [email]);
         if (!user) {
             return res.status(401).json({ error: 'Invalid email or password' });
         }
-
 
         // Compare password
         const isMatch = await comparePasswords(password, user.password);
@@ -53,7 +51,19 @@ router.post('/', async(req, res) => {
                 // Generate JWT
                 const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-                return res.status(200).json({ message: 'Logged in successfully', token, userId: user.id });
+                res.cookie('token', token, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production',
+                    maxAge: 3600000 // 1 hour
+                });
+                res.cookie('userId', user.userId, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === 'production',
+                    maxAge: 3600000 // 1 hour
+                });
+                // Update last login attempt
+                await db.oneOrNone('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE email = $1', [email]);
+                return res.status(200).json({ message: 'Logged in successfully', userId: user.id });
             }
 
 
@@ -67,8 +77,22 @@ router.post('/', async(req, res) => {
         // If 2fa is not required, generate JWT token and proceed
         const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Return userId and token to frontend
-        res.status(200).json({ message: 'Logged in successfully', token, userId: user.id });
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 3600000 // 1 hour
+        });
+        res.cookie('userId', user.userId, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 3600000 // 1 hour
+        });
+
+        // Update last login attempt
+        await db.oneOrNone('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE email = $1', [email]);
+
+        res.status(200).json({ message: 'Logged in successfully', userId: user.id });
+
     } catch (error) {
         console.error('Error logging in:', error);
         res.status(500).json({ error: 'Failed to log in' });

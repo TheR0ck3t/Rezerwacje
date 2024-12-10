@@ -29,10 +29,21 @@ router.post('/', async(req, res) => {
         const userId = newUser.id;
 
         // Generate JWT token
-        const token = jwt.sign({ userId, email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId, email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Send JWT token and userId as response
-        return res.status(200).json({ message: 'User registered successfully', user: newUser, token, userId });
+        // Set cookie for the user and update the session with the new token
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 3600000 // 1 hour
+        });
+        res.cookie('userId', userId, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 3600000 // 1 hour
+        });
+
+        return res.status(200).json({ message: 'User registered successfully', userId });
 
         // Send verification email
 
