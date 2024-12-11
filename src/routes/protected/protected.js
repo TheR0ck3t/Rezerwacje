@@ -8,9 +8,15 @@ router.get('/dashboard', authToken, (req, res) => {
 });
 
 router.get('/user', authToken, (req, res) => {
-    const user = req.user; // Assuming `authenticate` middleware validates JWT from cookies and attaches the user
-    res.status(200).json({ message: `Welcome back, ${user.email}!` });
+    const user = req.user; // Assuming `authToken` middleware validates JWT from cookies and attaches the user
+    try {
+        res.status(200).json({ message: `Welcome back, ${user.email}!` });
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ error: 'Failed to fetch user' });
+    }
 });
+
 
 module.exports = {
     path: '/',

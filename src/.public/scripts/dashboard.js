@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         window.location.href = '/'; // Redirect to login page
     }
 
-
     // Logout handler
     document.getElementById('logout').addEventListener('click', () => {
         // Clear cookies (assuming your token is stored as a cookie)
@@ -25,5 +24,4 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Redirect to the homepage or login page
         window.location.href = '/';
     });
-
 });

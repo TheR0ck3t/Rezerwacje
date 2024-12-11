@@ -44,11 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         if (response.status === 200) {
                             if (data.requires2FA) {
-                                localStorage.setItem('userId', data.userId);
                                 show2FAModal(data.userId);
                             } else {
-                                // Since the token is set in cookies, you don't need to manually store it in localStorage
-                                localStorage.setItem('userId', data.userId); // Store userId in localStorage if needed
                                 window.location.href = '/dashboard'; // Redirect to dashboard
                             }
                         } else {
@@ -66,14 +63,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to show 2FA modal
     function show2FAModal(userId) {
         const twoFaModal = document.getElementById('twoFaModal');
+        if (!twoFaModal) {
+            console.error('2FA modal not found');
+            return;
+        }
+
         twoFaModal.style.display = 'block';
 
         // Handle 2FA verification
-        document.getElementById('submit2fa').addEventListener('click', async(e) => {
-            const token2fa = document.getElementById('token2fa').value;
+        const submit2faButton = document.getElementById('submitTwoFa');
+        if (!submit2faButton) {
+            console.error('Submit 2FA button not found');
+            return;
+        }
+
+        submit2faButton.addEventListener('click', async(e) => {
+            const token2fa = document.getElementById('twoFaInput').value;
             console.log('Sending 2FA verification request', { userId, token: token2fa });
             try {
-                const response = await axios.post('auth/verify-2fa', {
+                const response = await axios.post('auth/2fa/verify', {
                     userId,
                     token: token2fa
                 }, {

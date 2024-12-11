@@ -2,15 +2,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Helper function to get cookie by name
     function getCookie(name) {
-        const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-        return match ? match[2] : null;
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                return cookie.substring(name.length + 1);
+            }
+        }
+        return null;
     }
 
-    document.addEventListener('DOMContentLoaded', async function() {
+    // Function to check 2FA status
+    async function check2FAStatus() {
         const userId = getCookie('userId'); // Get user ID from cookies
+        if (!userId) {
+            console.error('User ID not found in cookies');
+            return;
+        }
         const button = document.getElementById('enable-2fa'); // Button to toggle 2FA enable/disable
 
-        // Check if 2FA is enabled for the user
         try {
             const response = await axios.get(`/auth/2fa/status/${userId}`, {
                 headers: {
@@ -18,10 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Authorization': `Bearer ${getCookie('token')}`, // Get token from cookies
                 },
             });
-
-            const { is2FAEnabled } = response.data;
+            const { enabled } = response.data;
             // Update the button text based on the 2FA status
-            if (is2FAEnabled) {
+            if (enabled) {
                 button.innerText = 'Disable 2FA';
             } else {
                 button.innerText = 'Enable 2FA';
@@ -29,10 +38,18 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error fetching 2FA status:', error);
         }
-    });
+    }
 
+    // Check 2FA status on page load
+    check2FAStatus();
+
+    // Event listener for enabling/disabling 2FA
     document.getElementById('enable-2fa').addEventListener('click', async function() {
         const userId = getCookie('userId'); // Get user ID from cookies
+        if (!userId) {
+            console.error('User ID not found in cookies');
+            return;
+        }
         const button = document.getElementById('enable-2fa'); // Button to toggle 2FA enable/disable
 
         // Check if 2FA is already enabled
@@ -51,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 // Ensure response is handled
-                if (response.data.success) {
+                if (response.data.message === '2FA disabled') {
                     alert('2FA has been disabled');
                     button.innerText = 'Enable 2FA'; // Change button text to enable 2FA
                 } else {
@@ -59,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
             } else {
-                // If 2FA is not enabled, send request to enable it
-                const response = await axios.post('/auth/2fa/enable', {
+                // Generate 2FA secret and QR code
+                const generateResponse = await axios.post('/auth/2fa/generate', {
                     userId,
                 }, {
                     headers: {
@@ -69,15 +86,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     },
                 });
 
-                // Ensure response is handled
-                if (response.data.qrCode) {
-                    const { qrCode } = response.data;
+                if (generateResponse.data.qrCodeUrl) {
+                    const { secret, qrCodeUrl } = generateResponse.data;
                     const qrImage = document.getElementById('qrcode');
-                    qrImage.src = qrCode;
+                    qrImage.src = qrCodeUrl;
                     qrImage.style.display = 'block';
-                    button.innerText = 'Disable 2FA'; // Change button text to disable 2FA
+
+                    // Dodaj opóźnienie przed wyświetleniem okna dialogowego
+                    setTimeout(async() => {
+                        // Prompt for 2FA token
+                        const token = prompt('Enter 2FA token:');
+                        if (!token) {
+                            alert('2FA token is required');
+                            return;
+                        }
+
+                        // Verify 2FA token and enable 2FA
+                        const enableResponse = await axios.post('/auth/2fa/enable', {
+                            userId,
+                            token,
+                            secret,
+                        }, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${getCookie('token')}`, // Get token from cookies
+                            },
+                        });
+
+                        if (enableResponse.data.message === '2FA enabled') {
+                            alert('2FA has been enabled');
+                            button.innerText = 'Disable 2FA'; // Change button text to disable 2FA
+                        } else {
+                            alert('Failed to enable 2FA');
+                        }
+                    }, 500); // Opóźnienie 500 ms
                 } else {
-                    alert('Failed to enable 2FA');
+                    alert('Failed to generate 2FA secret');
                 }
             }
         } catch (error) {
