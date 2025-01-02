@@ -1,0 +1,23 @@
+/* Styl sekcji CTA */
+
+.cta-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    overflow: hidden;
+}
+
+.cta-section h2 {
+    margin-bottom: 20px;
+}
+
+.cta-section .cta-button {
+    background-color: #fff;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.cta-section .cta-button:hover {
+    background-color: #e6e6e6;
+}

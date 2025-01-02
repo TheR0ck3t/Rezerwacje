@@ -4,11 +4,17 @@ const router = express.Router();
 
 // Static routes
 router.get('/', (req, res) => {
-    res.render(path.resolve(__dirname, '../../views/public/index'));
+    res.render(path.resolve(__dirname, '../../views/public/index'), {
+        currentPage: 'home', // Przekazanie currentPage do widoku
+        user: req.user || null // Dodanie user, jeśli jest zalogowany
+    });
 });
 
 router.get('/about', (req, res) => {
-    res.render(path.resolve(__dirname, '../../views/public/about'));
+    res.render(path.resolve(__dirname, '../../views/public/about'), {
+        currentPage: 'about', // Przekazanie currentPage do widoku
+        user: req.user || null
+    });
 });
 
 router.get('/loginForm', (req, res) => {

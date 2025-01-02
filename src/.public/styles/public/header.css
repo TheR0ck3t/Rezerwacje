@@ -1,0 +1,48 @@
+/* Header */
+
+header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar {
+    padding: 0.8rem 1.5rem;
+    /* Dodanie paddingu w poziomie i pionie */
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.nav-item {
+    margin-left: 1rem;
+    /* Odstępy między linkami */
+}
+
+.nav-link {
+    font-size: 1rem;
+    /* Nieco większa czcionka */
+    padding: 0.5rem 1rem;
+    /* Więcej miejsca wokół tekstu */
+}
+
+.btn {
+    padding: 0.5rem 1.2rem;
+    /* Większy padding przycisków */
+    font-size: 1rem;
+}
+
+.collapse {
+    justify-content: space-between;
+    /* Wyrównanie elementów */
+    align-items: center;
+}
+
+.d-flex.space-between .btn+.btn {
+    margin-left: 10px;
+    /* Dodanie odstępu między przyciskami */
+}

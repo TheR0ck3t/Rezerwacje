@@ -4,7 +4,10 @@ const path = require('path');
 const authToken = require('../../modules/authModules/authToken');
 
 router.get('/dashboard', authToken, (req, res) => {
-    res.render(path.resolve(__dirname, '../../views/protected/dashboard.ejs'));
+    res.render(path.resolve(__dirname, '../../views/protected/dashboard.ejs'), {
+        currentPAge: 'dashboard',
+        user: req.user
+    });
 });
 
 router.get('/user', authToken, (req, res) => {

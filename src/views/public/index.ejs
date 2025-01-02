@@ -3,7 +3,10 @@
 
 <head>
     <%- include('../partials/head'); %>
-        <link rel="stylesheet" href="/styles/style.css">
+        <link rel="stylesheet" href="/styles/public/cta.css">
+        <link rel="stylesheet" href="/styles/public/features.css">
+        <link rel="stylesheet" href="/styles/public/hero.css">
+        <link rel="stylesheet" href="/styles/public/testimonials.css">
 </head>
 
 <body>
@@ -12,26 +15,55 @@
             <%- include ('../partials/modals/twoFaModal.ejs'); %>
     </header>
 
-    <div id="Aaa">
-        <ul>
-            <li>
-                <p>OWO 1</p>
-            </li>
-            <li>
-                <p>OWO 2</p>
-            </li>
-            <li>
-                <p id="OWO">OWO 3</p>
-            </li>
-            <li>
-                <p>OWO 4</p>
-            </li>
-            <li>
-                <p>OWO 5</p>
-            </li>
-            <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque vero, numquam quos doloribus mollitia repellendus debitis corporis aspernatur asperiores animi, aperiam fugiat voluptas quae ipsam perspiciatis hic. Est, tempora. Enim.</li>
-        </ul>
-    </div>
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Rezerwuj sale konferencyjne szybko i wygodnie</h1>
+            <p>Oszczędzaj czas i zarezerwuj idealną przestrzeń na swoje spotkanie. Bez stresu, bez problemów – tylko efektywność.</p>
+            <a href="/rejestracja" class="cta-button">Zarejestruj się teraz</a>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <h2>Dlaczego warto skorzystać z naszej aplikacji?</h2>
+        <div class="features-grid">
+            <div class="feature">
+                <h3>Łatwość obsługi</h3>
+                <p>Intuicyjny interfejs pozwala każdemu szybko znaleźć i zarezerwować odpowiednią salę.</p>
+            </div>
+            <div class="feature">
+                <h3>Elastyczność</h3>
+                <p>Nasza aplikacja obsługuje różnorodne konfiguracje sal – od małych pomieszczeń do dużych przestrzeni konferencyjnych.</p>
+            </div>
+            <div class="feature">
+                <h3>Powiadomienia w czasie rzeczywistym</h3>
+                <p>Zawsze bądź na bieżąco dzięki powiadomieniom o potwierdzeniach rezerwacji i przypomnieniach.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonial-section">
+        <h2>Opinie naszych użytkowników</h2>
+        <div class="testimonials">
+            <div class="testimonial">
+                <p>„Dzięki tej aplikacji nasza firma zaoszczędziła mnóstwo czasu. Wszystko działa płynnie i intuicyjnie!”</p>
+                <span>- Anna, HR Manager</span>
+            </div>
+            <div class="testimonial">
+                <p>„Rezerwowanie sal nigdy nie było tak proste. Wystarczy kilka kliknięć i wszystko załatwione.”</p>
+                <span>- Marek, Właściciel biura coworkingowego</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Gotowy na efektywne zarządzanie rezerwacjami?</h2>
+        <a href="/rejestracja" class="cta-button">Rozpocznij teraz</a>
+    </section>
+
+    <footer>
+        <%- include('../partials/public/footer.ejs'); %>
+    </footer>
+
     <script src="/scripts/register.js"></script>
     <script src="/scripts/login.js"></script>
 </body>

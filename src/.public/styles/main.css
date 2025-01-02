@@ -1,0 +1,76 @@
+/* Reset i uniwersalne style */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    /* Ułatwia skalowanie fontów */
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+body {
+    min-height: 100%;
+    overflow-x: hidden;
+    line-height: 1.5;
+    /* Poprawa czytelności tekstu */
+    font-family: Arial, sans-serif;
+    /* Bezpieczna, domyślna czcionka */
+    background-color: #f4f4f4;
+    /* Neutralny kolor tła */
+    color: #333;
+    /* Domyślny kolor tekstu */
+}
+
+img,
+picture,
+svg,
+video {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    /* Odziedziczony kolor */
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #007BFF;
+    /* Zmienny kolor hover */
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font: inherit;
+}
+
+input,
+textarea,
+button,
+select {
+    font: inherit;
+    outline: none;
+}

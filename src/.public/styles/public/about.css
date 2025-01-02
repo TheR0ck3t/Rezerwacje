@@ -1,0 +1,37 @@
+.about-section {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.about-section h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.about-section h2 {
+    color: #555;
+    margin-top: 20px;
+}
+
+.about-section p {
+    margin: 15px 0;
+}
+
+.about-section ul {
+    padding-left: 20px;
+    color: #444;
+    list-style-type: disc;
+}
+
+.about-section ul li {
+    margin-bottom: 10px;
+}
+
+.about-section ul li strong {
+    color: #333;
+}

@@ -3,18 +3,48 @@
 
 <head>
     <%- include('../partials/head.ejs');%>
+        <link rel="stylesheet" href="/styles/public/about.css">
 </head>
 
 <body>
     <header>
         <%- include('../partials/public/header.ejs');%>
             <%- include ('../partials/modals/twoFaModal.ejs'); %>
-                <h1>ABOUT</h1>
-
-
     </header>
+    <section class="about-section">
+        <h1>O nas</h1>
+        <p>
+            Nasza aplikacja została stworzona z myślą o usprawnieniu procesu rezerwacji sal konferencyjnych w nowoczesnych biurach i przestrzeniach coworkingowych. Rozumiemy, jak ważne jest efektywne zarządzanie czasem i przestrzenią, dlatego dostarczamy rozwiązanie,
+            które pozwala zaoszczędzić czas, uniknąć nieporozumień i skupić się na tym, co najważniejsze – produktywnych spotkaniach.
+        </p>
+        <h2>Dlaczego warto nas wybrać?</h2>
+        <ul>
+            <li><strong>Intuicyjny interfejs:</strong> Nasza aplikacja jest łatwa w obsłudze, niezależnie od tego, czy rezerwacji dokonuje osoba techniczna, czy laik.</li>
+            <li><strong>Elastyczność:</strong> System obsługuje różnorodne konfiguracje sal – od małych pomieszczeń do burzy mózgów po duże sale konferencyjne.</li>
+            <li><strong>Powiadomienia w czasie rzeczywistym:</strong> Bądź na bieżąco dzięki powiadomieniom o potwierdzeniu rezerwacji i przypomnieniach.</li>
+            <li><strong>Współpraca zespołowa:</strong> Możliwość wspólnego planowania spotkań z członkami zespołu.</li>
+        </ul>
+        <h2>Nasza misja</h2>
+        <p>
+            Naszą misją jest uproszczenie procesu zarządzania przestrzeniami biurowymi, aby każdy mógł skupić się na tym, co naprawdę istotne. Dzięki naszej aplikacji masz pewność, że zawsze znajdziesz odpowiednie miejsce na swoje spotkanie, bez zbędnych komplikacji.
+        </p>
+        <h2>Kontakt</h2>
+        <p>
+            Masz pytania lub potrzebujesz wsparcia? Skontaktuj się z nami:
+        </p>
+        <ul>
+            <li><strong>Email:</strong> support@rezerwacje-sal.pl</li>
+            <li><strong>Telefon:</strong> +48 123 456 789</li>
+        </ul>
+    </section>
+
+
+    <footer>
+        <%- include('../partials/public/footer.ejs');%>
+    </footer>
     <script src="/scripts/register.js"></script>
     <script src="/scripts/login.js"></script>
+
 </body>
 
 </html>
