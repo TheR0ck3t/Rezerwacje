@@ -15,7 +15,8 @@ module.exports = async(req, res, next) => {
         }
 
         try {
-            const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', [decoded.userId]);
+            const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', [decoded.id]);
+            console.log(user);
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }

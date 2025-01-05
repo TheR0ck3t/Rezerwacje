@@ -1,37 +1,56 @@
-.about-section {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+/* Styl sekcji hero */
+
+.about-hero {
+    background-color: #007BFF;
+    color: #fff;
 }
 
-.about-section h1 {
-    text-align: center;
+.about-hero h1 {
+    font-size: 2.5rem;
+}
+
+.about-hero p {
+    font-size: 1.2rem;
+}
+
+
+/* Styl sekcji misji */
+
+.about-mission {
+    background-color: #f8f9fa;
     color: #333;
-    margin-bottom: 20px;
 }
 
-.about-section h2 {
+.about-mission h2 {
+    font-size: 2rem;
+}
+
+.about-mission p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+
+/* Styl sekcji zespołu */
+
+.about-team h2 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.about-team img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid #007BFF;
+}
+
+.about-team h4 {
+    margin-top: 15px;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.about-team p {
     color: #555;
-    margin-top: 20px;
-}
-
-.about-section p {
-    margin: 15px 0;
-}
-
-.about-section ul {
-    padding-left: 20px;
-    color: #444;
-    list-style-type: disc;
-}
-
-.about-section ul li {
-    margin-bottom: 10px;
-}
-
-.about-section ul li strong {
-    color: #333;
 }

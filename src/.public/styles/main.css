@@ -20,6 +20,7 @@ html {
     padding: 0;
     min-height: 100%;
     min-width: 100%;
+    height: 100%;
 }
 
 body {
@@ -33,6 +34,12 @@ body {
     /* Neutralny kolor tła */
     color: #333;
     /* Domyślny kolor tekstu */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
 }
 
 img,

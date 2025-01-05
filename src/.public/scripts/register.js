@@ -1,57 +1,44 @@
-addEventListener('DOMContentLoaded', () => {
-    document.getElementById('register').addEventListener('click', async() => {
-        const formContainer = document.getElementById('form-container');
+document.addEventListener('DOMContentLoaded', () => {
+    // Attach the register form submit handler
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) {
+        registerForm.addEventListener('submit', async(e) => {
+            e.preventDefault();
+            const email = document.getElementById('emailRegister').value;
+            const password = document.getElementById('passwordRegister').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
 
-        try {
-            // Fetch the registration form template
-            const response = await axios.get('/registerForm');
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(response.data, 'text/html');
-            const form = doc.querySelector('form'); // Select the form element from the fetched HTML
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
 
-            // Clear any existing content and append the form
-            formContainer.innerHTML = '';
-            formContainer.appendChild(form);
-
-            // Attach Cancel button functionality (reset button behavior)
-            form.addEventListener('reset', () => {
-                console.log('Cancel clicked');
-                formContainer.innerHTML = '';
-            });
-
-            // Attach Submit functionality
-            form.addEventListener('submit', async function(event) {
-                event.preventDefault(); // Prevent page refresh
-
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-
-                try {
-                    console.log(email, password);
-                    const registerResponse = await axios.post('auth/register', {
-                        email,
-                        password
-                    }, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
-                    if (registerResponse.status !== 200) {
-                        throw new Error(`Failed to register. ${registerResponse.statusText}`);
-                    } else {
-                        const data = registerResponse.data;
-                        console.log(data.userId, data.token);
-                        window.location.href = '/dashboard';
+            try {
+                const response = await axios.post('auth/register', {
+                    email,
+                    password
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
                     }
-                } catch (error) {
-                    console.error('Error registering:', error);
-                    alert('Failed to register. Please try again later.');
+                });
+
+                const data = response.data;
+
+                if (response.status === 200) {
+                    window.location.href = '/dashboard'; // Redirect to dashboard
+                } else {
+                    alert(data.error || 'Failed to register. Please try again later');
                 }
-            });
-        } catch (err) {
-            console.error('Error loading the form:', err);
-            alert('Failed to load the registration form. Please try again later.');
-        }
-    });
+            } catch (error) {
+                console.error(error);
+                alert('Failed to register. Please try again later');
+            }
+        });
+
+        registerForm.addEventListener('reset', (e) => {
+            console.log('Register form cancelled');
+            window.location.href = '/'; // Redirect to home page
+        });
+    }
 });

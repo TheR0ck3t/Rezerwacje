@@ -1,64 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Load the login form dynamically
-    document.getElementById('login').addEventListener('click', () => {
-        const formContainer = document.getElementById('form-container');
+    // Attach the login form submit handler
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', async(e) => {
+            e.preventDefault();
+            const email = document.getElementById('emailLogin').value;
+            const password = document.getElementById('passwordLogin').value;
+            const token2fa = document.getElementById('token2fa') && document.getElementById('token2fa').value || null;
 
-        fetch('/loginForm')
-            .then(res => res.text())
-            .then(html => {
-                // Parse the response HTML string into a DOM structure
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const form = doc.querySelector('form'); // Select the form element from the fetched HTML
-
-                // Clear any existing content and append the form
-                formContainer.innerHTML = ''; // Safe to clear everything
-                formContainer.appendChild(form);
-
-                // Attach the Cancel button functionality
-                form.addEventListener('reset', () => {
-                    console.log('Cancel clicked');
-                    formContainer.innerHTML = ''; // Safely remove the form
+            try {
+                const response = await axios.post('auth/login', {
+                    email,
+                    password,
+                    token2fa
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    withCredentials: true // Important for sending cookies with the request
                 });
 
-                // Attach the login form submit handler
-                form.addEventListener('submit', async(e) => {
-                    e.preventDefault();
-                    const email = document.getElementById('email').value;
-                    const password = document.getElementById('password').value;
-                    const token2fa = document.getElementById('token2fa') && document.getElementById('token2fa').value || null;
+                const data = response.data;
 
-                    try {
-                        const response = await axios.post('auth/login', {
-                            email,
-                            password,
-                            token2fa
-                        }, {
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            withCredentials: true // Important for sending cookies with the request
-                        });
-
-                        const data = response.data;
-
-                        if (response.status === 200) {
-                            if (data.requires2FA) {
-                                show2FAModal(data.userId);
-                            } else {
-                                window.location.href = '/dashboard'; // Redirect to dashboard
-                            }
-                        } else {
-                            alert(data.error || 'Failed to log in. Please try again later');
-                        }
-                    } catch (error) {
-                        console.error(error);
-                        alert('Failed to log in. Please try again later');
+                if (response.status === 200) {
+                    if (data.requires2FA) {
+                        show2FAModal(data.userId);
+                    } else {
+                        window.location.href = '/dashboard'; // Redirect to dashboard
                     }
-                });
-            })
-            .catch(err => console.error('Error loading the form:', err));
-    });
+                } else {
+                    alert(data.error || 'Failed to log in. Please try again later');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Failed to log in. Please try again later');
+            }
+        });
+        loginForm.addEventListener('reset', (e) => {
+            console.log('Login form cancelled');
+            window.location.href = '/'; // Redirect to home page
+        });
+    }
 
     // Function to show 2FA modal
     function show2FAModal(userId) {

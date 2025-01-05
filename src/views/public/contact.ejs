@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head'); %>
+        <title>Kontakt</title>
+        <link rel="stylesheet" href="/styles/public/contact.css">
+</head>
+
+<body>
+    <header>
+        <%- include('../partials/public/header.ejs');%>
+    </header>
+
+    <main class="contact-page">
+        <section class="contact-details">
+            <h1>Skontaktuj się z nami</h1>
+            <p>Masz pytania? Jesteśmy tutaj, aby Ci pomóc!</p>
+            <div class="contact-info">
+                <p><i class="fas fa-phone"></i> Telefon: +48 123 456 789</p>
+                <p><i class="fas fa-envelope"></i> Email: kontakt@przykład.pl</p>
+                <p><i class="fas fa-map-marker-alt"></i> Adres: ul. Przykładowa 1, 00-001 Warszawa</p>
+            </div>
+        </section>
+        <%- include('../partials/forms/contact.ejs'); %>
+
+    </main>
+    <footer>
+        <%- include('../partials/public/footer.ejs'); %>
+    </footer>
+</body>
+
+</html>

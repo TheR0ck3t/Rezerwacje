@@ -24,12 +24,10 @@ router.post('/', async(req, res) => {
 
         // Insert user into the database
         const newUser = await db.one('INSERT INTO users(email, password) VALUES($1, $2) RETURNING id', [email, hashedPassword]);
-
-        // Get userId to be used in localstorage
-        const userId = newUser.id;
+        console.log(newUser);
 
         // Generate JWT token
-        const token = jwt.sign({ userId, email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: newUser.id, email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // Set cookie for the user and update the session with the new token
         res.cookie('token', token, {
@@ -37,13 +35,14 @@ router.post('/', async(req, res) => {
             secure: process.env.NODE_ENV === 'production',
             maxAge: 3600000 // 1 hour
         });
-        res.cookie('userId', userId, {
+        res.cookie('userId', newUser.id, {
             httpOnly: false,
             secure: process.env.NODE_ENV === 'production',
             maxAge: 3600000 // 1 hour
         });
+        await db.oneOrNone('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE email = $1', [email]);
+        return res.status(200).json({ message: 'User registered successfully', newUser });
 
-        return res.status(200).json({ message: 'User registered successfully', userId });
 
         // Send verification email
 

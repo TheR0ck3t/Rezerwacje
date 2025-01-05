@@ -30,10 +30,36 @@ header {
     /* Więcej miejsca wokół tekstu */
 }
 
-.btn {
-    padding: 0.5rem 1.2rem;
-    /* Większy padding przycisków */
+.auth-buttons .btn {
+    padding: 0.6rem 1.5rem;
+    /* Większy padding dla bardziej wyrazistych przycisków */
     font-size: 1rem;
+    /* Spójny rozmiar tekstu */
+    border-radius: 30px;
+    /* Zaokrąglone rogi dla bardziej nowoczesnego wyglądu */
+    transition: all 0.3s ease;
+    /* Płynna animacja */
+}
+
+.auth-buttons .btn-outline-primary {
+    color: #007BFF;
+    border-color: #007BFF;
+}
+
+.auth-buttons .btn-outline-primary:hover {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+.auth-buttons .btn-primary {
+    background-color: #007BFF;
+    border-color: #007BFF;
+    color: #fff;
+}
+
+.auth-buttons .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
 }
 
 .collapse {
