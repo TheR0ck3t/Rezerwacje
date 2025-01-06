@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+        <link rel="stylesheet" href="/styles/protected/settings.css">
+        <title>Ustawienia konta</title>
+</head>
+
+<body>
+    <%- include('../partials/protected/header.ejs') %>
+        <main class="container settings-page">
+            <h1 class="text-center mb-4">Ustawienia konta</h1>
+
+            <!-- Siatka z kartami -->
+            <section class="settings-grid">
+                <!-- Karta: Dane osobowe -->
+                <div class="card">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h3 class="card-title mb-0">Dane osobowe</h3>
+                        <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#personalInfo" aria-expanded="false" aria-controls="personalInfo">
+                        Rozwiń
+                    </button>
+                    </div>
+                    <div class="collapse" id="personalInfo">
+                        <div class="card-body">
+                            <form id="personalInfoForm">
+                                <div class="form-group mb-3">
+                                    <label for="firstName" class="form-label">Imię:</label>
+                                    <input type="text" id="firstName" class="form-control" placeholder="Wprowadź imię">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="lastName" class="form-label">Nazwisko:</label>
+                                    <input type="text" id="lastName" class="form-control" placeholder="Wprowadź nazwisko">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="phoneNumber" class="form-label">Numer telefonu:</label>
+                                    <input type="tel" id="phoneNumber" class="form-control" placeholder="Wprowadź numer telefonu">
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Zapisz dane</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Karta: Zmiana hasła -->
+                <div class="card">
+                    <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                        <h3 class="card-title mb-0">Zmiana hasła</h3>
+                        <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#changePassword" aria-expanded="false" aria-controls="changePassword">
+                        Rozwiń
+                    </button>
+                    </div>
+                    <div class="collapse" id="changePassword">
+                        <div class="card-body">
+                            <form id="passwordForm">
+                                <div class="form-group mb-3">
+                                    <label for="email" class="form-label">Adres e-mail:</label>
+                                    <input type="email" id="email" class="form-control" disabled>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="currentPassword" class="form-label">Aktualne hasło:</label>
+                                    <input type="password" id="currentPassword" class="form-control" placeholder="Wprowadź swoje aktualne hasło" autocomplete="new-password">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="password" class="form-label">Nowe hasło:</label>
+                                    <input type="password" id="password" class="form-control" placeholder="Wprowadź nowe hasło">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="confirmPassword" class="form-label">Potwierdź hasło:</label>
+                                    <input type="password" id="confirmPassword" class="form-control" placeholder="Potwierdź nowe hasło">
+                                </div>
+                                <button type="submit" class="btn btn-secondary w-100">Zmień hasło</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Karta: Dwuskładnikowe uwierzytelnianie -->
+                <div class="card">
+                    <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+                        <h3 class="card-title mb-0">Dwuskładnikowe uwierzytelnianie (2FA)</h3>
+                        <button class="btn btn-sm btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#twoFactorAuth" aria-expanded="false" aria-controls="twoFactorAuth">
+                        Rozwiń
+                    </button>
+                    </div>
+                    <div class="collapse" id="twoFactorAuth">
+                        <div class="card-body text-center">
+                            <p>Dodaj dodatkową warstwę zabezpieczeń dla swojego konta.</p>
+                            <button id="enable-2fa" class="btn btn-danger text-white">Włącz 2FA</button>
+                            <img alt="Zeskanuj kod QR" id="qrcode" class="img-fluid mt-3" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+
+        <script src="/scripts/protected/settings.js"></script>
+        <script src="/scripts/protected/2fa.js"></script>
+        <footer>
+            <%- include('../partials/public/footer.ejs') %>
+        </footer>
+</body>
+
+</html>

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = response.data;
 
                 if (response.status === 200) {
-                    window.location.href = '/dashboard'; // Redirect to dashboard
+                    window.location.href = '/register-success';
                 } else {
                     alert(data.error || 'Failed to register. Please try again later');
                 }

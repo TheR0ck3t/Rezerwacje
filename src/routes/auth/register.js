@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../../modules/dbModules/db');
 const jwt = require('jsonwebtoken');
 const { hashPassword } = require('../../modules/authModules/userAuth');
+const { sendVerificationEmail } = require('../../services/mailing');
 
 router.post('/', async(req, res) => {
     const { email, password } = req.body;
@@ -23,36 +24,26 @@ router.post('/', async(req, res) => {
         const hashedPassword = await hashPassword(password);
 
         // Insert user into the database
-        const newUser = await db.one('INSERT INTO users(email, password) VALUES($1, $2) RETURNING id', [email, hashedPassword]);
+        const newUser = await db.one('INSERT INTO users(email, password, is_active) VALUES($1, $2, $3) RETURNING id', [email, hashedPassword, false]);
         console.log(newUser);
 
-        // Generate JWT token
-        const token = jwt.sign({ id: newUser.id, email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
-        // Set cookie for the user and update the session with the new token
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 3600000 // 1 hour
-        });
-        res.cookie('userId', newUser.id, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 3600000 // 1 hour
-        });
-        await db.oneOrNone('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE email = $1', [email]);
-        return res.status(200).json({ message: 'User registered successfully', newUser });
-
+        // Generate verification token
+        const verificationToken = jwt.sign({ id: newUser.id, email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // Send verification email
+        try {
+            await sendVerificationEmail(email, verificationToken);
+        } catch (err) {
+            console.error('Error sending verification email:', err);
+            return res.status(500).json({ error: 'Failed to send verification email' });
+        }
 
-
+        return res.status(200).json({ message: 'User registered successfully. Verification email sent.', newUser });
     } catch (error) {
         console.error('Error registering user:', error);
         return res.status(500).json({ error: 'Something went wrong' });
     }
 });
-
 
 module.exports = {
     path: '/auth/register',

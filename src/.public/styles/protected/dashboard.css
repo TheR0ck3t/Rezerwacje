@@ -1,0 +1,142 @@
+/* Podstawowe style dla dashboardu */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Główna kontenerka dashboardu */
+
+.dashboard-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+/* Sekcja powitalna */
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.welcome-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #343a40;
+}
+
+.welcome-section p {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+
+/* Styl sekcji akcji */
+
+.actions-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Trzy kolumny */
+    gap: 20px;
+    justify-content: center;
+}
+
+
+/* Karty akcji */
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 25px 20px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: #007bff;
+}
+
+.card p {
+    color: #6c757d;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+
+/* Przyciski */
+
+.card .btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.card .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.card .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.card .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+
+/* Responsywność */
+
+@media (max-width: 992px) {
+    .actions-section {
+        grid-template-columns: repeat(2, 1fr);
+        /* Dwie kolumny na tabletach */
+    }
+}
+
+@media (max-width: 576px) {
+    .actions-section {
+        grid-template-columns: 1fr;
+        /* Jedna kolumna na telefonach */
+    }
+    .welcome-section h1 {
+        font-size: 2rem;
+    }
+    .welcome-section p {
+        font-size: 1rem;
+    }
+    .card {
+        padding: 20px;
+    }
+    .card h2 {
+        font-size: 1.4rem;
+    }
+    .card p {
+        font-size: 0.9rem;
+    }
+}

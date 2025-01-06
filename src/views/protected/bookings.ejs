@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+        <link rel="stylesheet" href="/styles/protected/bookings.css">
+        <title>Moje Rezerwacje</title>
+</head>
+
+<body>
+    <%- include('../partials/protected/header.ejs') %>
+
+        <main class="container my-bookings-page">
+            <h1 class="text-center mb-4">Moje Rezerwacje</h1>
+
+            <section class="bookings-section">
+                <!-- Tabela z rezerwacjami -->
+                <table class="table table-striped table-hover" id="bookingsTable" style="display: none;">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Pokój</th>
+                            <th scope="col">Data rozpoczęcia</th>
+                            <th scope="col">Data zakończenia</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Opcje</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsTableBody">
+                        <!-- Wiersze generowane dynamicznie -->
+                    </tbody>
+                </table>
+                <!-- Placeholder, gdy brak rezerwacji -->
+                <div id="noBookingsPlaceholder" class="text-center my-5" style="display: none;">
+                    <i class="fas fa-calendar-times fa-5x text-muted mb-3"></i>
+                    <h3 class="text-muted">Brak rezerwacji</h3>
+                    <p class="text-muted">Nie masz jeszcze żadnych rezerwacji. Rozpocznij rezerwację już teraz!</p>
+                    <a href="/rooms" class="btn btn-primary">Zarezerwuj Pokój</a>
+                </div>
+            </section>
+        </main>
+
+        <script src="/scripts/protected/bookings.js"></script>
+        <footer>
+            <%- include('../partials/public/footer.ejs') %>
+        </footer>
+</body>
+
+</html>

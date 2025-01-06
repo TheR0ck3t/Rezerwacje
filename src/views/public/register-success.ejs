@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+        <link rel="stylesheet" href="/styles/public/register-success.css">
+        <title>Weryfikacja konta</title>
+</head>
+
+<body>
+    <%- include('../partials/public/header.ejs') %>
+
+        <main class="container text-center mt-5">
+            <section class="verify-section">
+                <i class="fas fa-envelope fa-5x text-primary mb-4"></i>
+                <h1>Aktywuj swoje konto</h1>
+                <p class="lead">
+                    Na Twój adres e-mail został wysłany link weryfikacyjny. Kliknij w link, aby aktywować swoje konto.
+                </p>
+                <p>
+                    Jeśli nie otrzymałeś wiadomości, sprawdź folder spam lub kliknij poniższy przycisk, aby wysłać e-mail ponownie.
+                </p>
+                <button id="resendVerification" class="btn btn-primary mt-3">Wyślij ponownie e-mail weryfikacyjny</button>
+            </section>
+        </main>
+
+        <script src="/scripts/public/register-success.js"></script>
+        <footer>
+            <%- include('../partials/public/footer.ejs') %>
+        </footer>
+</body>
+
+</html>

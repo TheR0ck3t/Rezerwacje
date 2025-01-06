@@ -29,11 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.location.href = '/dashboard'; // Redirect to dashboard
                     }
                 } else {
+                    console.log('Error: ' + data.status);
                     alert(data.error || 'Failed to log in. Please try again later');
                 }
             } catch (error) {
                 console.error(error);
-                alert('Failed to log in. Please try again later');
+                if (error.response && error.response.status === 401) {
+                    if (error.response.data.error === 'User is not active') {
+                        alert('Konto nieaktywne. Proszę zweryfikować swój email.');
+                    } else {
+                        alert('Nieprawidłowy email lub hasło.');
+                    }
+                } else {
+                    alert('Failed to log in. Reason: ' + (error.message || 'Please try again later'));
+                }
             }
         });
         loginForm.addEventListener('reset', (e) => {

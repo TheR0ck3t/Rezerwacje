@@ -47,6 +47,8 @@ const loadRoutes = (dirPath) => {
 };
 
 loadRoutes(routesPath);
+const combinedErrorHandler = require('./modules/errorHandler');
+app.use(combinedErrorHandler);
 
 // Start server
 server.listen(PORT, () => {

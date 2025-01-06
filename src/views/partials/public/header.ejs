@@ -1,31 +1,29 @@
 <div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-    <div class="container">
+    <div class="container-fluid">
         <!-- Logo -->
         <a class="navbar-brand d-flex align-items-center" href="/">
             <i class="fas fa-calendar-alt me-2"></i> Rezerwacje Sal
         </a>
-        <!-- Toggle -->
+        <!-- Toggle Button -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/about">O Nas</a>
                 </li>
             </ul>
-            <!-- Buttons -->
-            <div class="d-flex space-between auth-buttons">
-                <button type="button" class="btn btn-outline-primary btn-lg me-2" id="login">
+            <!-- Authentication Buttons -->
+            <div class="d-flex auth-buttons">
+                <a href="/auth?view=login" class="btn btn-outline-primary btn-lg me-2" id="login">
                     <i class="fas fa-sign-in-alt"></i> Zaloguj
-                </button>
-                <button type="button" class="btn btn-primary btn-lg ms-2" id="register">
+                </a>
+                <a href="/auth?view=register" class="btn btn-primary btn-lg ms-2" id="register">
                     <i class="fas fa-user-plus"></i> Zarejestruj się
-                </button>
+                </a>
             </div>
         </div>
     </div>
 </div>
-
-<script src="/scripts/header.js"></script>

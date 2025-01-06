@@ -1,74 +1,79 @@
-/* Header */
-
-header {
-    background-color: #ffffff;
-    border-bottom: 1px solid #e9ecef;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
+/* Nagłówek dla niezalogowanych użytkowników */
 
 .navbar {
-    padding: 0.8rem 1.5rem;
-    /* Dodanie paddingu w poziomie i pionie */
+    padding: 15px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
-.nav-item {
-    margin-left: 1rem;
-    /* Odstępy między linkami */
+.navbar-brand i {
+    margin-right: 10px;
+    font-size: 1.5rem;
 }
 
-.nav-link {
+.navbar-brand:hover {
+    color: #0056b3;
+}
+
+.navbar-toggler {
+    border: none;
+    color: #007bff;
+    font-size: 1.25rem;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #555;
     font-size: 1rem;
-    /* Nieco większa czcionka */
-    padding: 0.5rem 1rem;
-    /* Więcej miejsca wokół tekstu */
+    margin-right: 15px;
+    transition: color 0.3s ease;
 }
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #007bff;
+}
+
+
+/* Przyciski logowania i rejestracji */
 
 .auth-buttons .btn {
-    padding: 0.6rem 1.5rem;
-    /* Większy padding dla bardziej wyrazistych przycisków */
     font-size: 1rem;
-    /* Spójny rozmiar tekstu */
-    border-radius: 30px;
-    /* Zaokrąglone rogi dla bardziej nowoczesnego wyglądu */
-    transition: all 0.3s ease;
-    /* Płynna animacja */
+    padding: 10px 20px;
+    margin-left: 10px;
 }
 
 .auth-buttons .btn-outline-primary {
-    color: #007BFF;
-    border-color: #007BFF;
+    color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .auth-buttons .btn-outline-primary:hover {
-    background-color: #007BFF;
+    background-color: #007bff;
     color: #fff;
 }
 
 .auth-buttons .btn-primary {
-    background-color: #007BFF;
-    border-color: #007BFF;
-    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .auth-buttons .btn-primary:hover {
     background-color: #0056b3;
-    border-color: #0056b3;
-}
-
-.collapse {
-    justify-content: space-between;
-    /* Wyrównanie elementów */
-    align-items: center;
-}
-
-.d-flex.space-between .btn+.btn {
-    margin-left: 10px;
-    /* Dodanie odstępu między przyciskami */
+    border-color: #004080;
 }

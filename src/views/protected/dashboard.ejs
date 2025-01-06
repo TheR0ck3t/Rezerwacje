@@ -3,18 +3,43 @@
 
 <head>
     <%- include('../partials/head.ejs') %>
+        <link rel="stylesheet" href="/styles/protected/dashboard.css">
+        <title>Dashboard</title>
 </head>
 
 <body>
-    <%- include('../partials/loggedIn/header.ejs') %>
-        <h1>BARK!</h1>
-        <p id="greeting"></p>
+    <%- include('../partials/protected/header.ejs') %>
+        <main class="dashboard-container">
+            <!-- Powitanie użytkownika -->
+            <section class="welcome-section">
+                <h1 id="greeting"></h1>
+                <p>Tu możesz zarządzać swoimi pokojami, rezerwacjami i ustawieniami konta.</p>
+            </section>
 
-        <button id="enable-2fa">Enable 2FA</button>
-        <img alt="Scan QR Code" id="qrcode" style="display: none;">
+            <!-- Karty z akcjami -->
+            <section class="actions-section">
+                <div class="card">
+                    <h2>Zarządzaj pokojami</h2>
+                    <p>Dodaj, edytuj lub przeglądaj pokoje dostępne do rezerwacji.</p>
+                    <a href="/rooms" class="btn btn-primary">Przejdź do pokoi</a>
+                </div>
+                <div class="card">
+                    <h2>Moje rezerwacje</h2>
+                    <p>Sprawdź i zarządzaj swoimi aktualnymi rezerwacjami.</p>
+                    <a href="/bookings" class="btn btn-primary">Zobacz rezerwacje</a>
+                </div>
+                <div class="card">
+                    <h2>Ustawienia konta</h2>
+                    <p>Zaktualizuj swój profil, zmień hasło lub włącz weryfikację wieloskładnikową.</p>
+                    <a href="/settings" class="btn btn-secondary">Przejdź do ustawień</a>
+                </div>
+            </section>
+        </main>
 
         <script src="/scripts/dashboard.js"></script>
-        <script src="/scripts/2fa.js"></script>
+        <footer>
+            <%- include('../partials/public/footer.ejs') %>
+        </footer>
 </body>
 
 </html>

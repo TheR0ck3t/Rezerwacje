@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/styles/public/auth.css">
     <link rel="shortcut icon" href="/res/favicon.ico" type="image/x-icon">
-    <!-- <link rel="stylesheet" href="/styles/main.css"> -->
     <title>Zaloguj się lub utwórz konto</title>
 </head>
 
@@ -19,63 +18,62 @@
     <main>
         <section class="auth-container">
             <div class="container" id="container">
-                <!-- Register Form -->
+                <!-- Formularz rejestracji -->
                 <div class="form-container register">
                     <form id="registerForm">
-                        <h1>Create Account</h1>
+                        <h1>Utwórz konto</h1>
                         <div class="social-icons">
-                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
                             <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
                             <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin"></i></a>
                         </div>
-                        <span>or use your email for registration</span>
+                        <span>lub użyj swojego e-maila do rejestracji</span>
                         <input type="email" id="emailRegister" name="email" placeholder="Email" required>
-                        <input type="password" id="passwordRegister" name="password" placeholder="Password" required>
-                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-                        <button type="submit" class="btn btn-primary">Register</button>
-                        <button type="cancel" class="btn btn-secondary">Cancel</button>
+                        <input type="password" id="passwordRegister" name="password" placeholder="Hasło" required>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Potwierdź hasło" required>
+                        <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+                        <button type="reset" class="btn btn-secondary">Anuluj</button>
                     </form>
                 </div>
 
-                <!-- Login Form -->
+                <!-- Formularz logowania -->
                 <div class="form-container login">
                     <form id="loginForm">
-                        <h1>Sign In</h1>
+                        <h1>Zaloguj się</h1>
                         <div class="social-icons">
-                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
                             <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
                             <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin"></i></a>
                         </div>
-                        <span>or use your email and password</span>
+                        <span>lub użyj swojego e-maila i hasła</span>
                         <input type="email" id="emailLogin" name="email" placeholder="Email" required>
-                        <input type="password" id="passwordLogin" name="password" placeholder="Password" required>
-                        <a href="#">Forget Your Password?</a>
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <button type="reset" class="btn btn-secondary">Cancel</button>
+                        <input type="password" id="passwordLogin" name="password" placeholder="Hasło" required>
+                        <a href="#">Zapomniałeś hasła?</a>
+                        <button type="submit" class="btn btn-primary">Zaloguj się</button>
+                        <button type="reset" class="btn btn-secondary">Anuluj</button>
                     </form>
                 </div>
 
-                <!-- Toggle Section -->
+                <!-- Sekcja przełączania -->
                 <div class="toggle-container">
                     <div class="toggle">
                         <div class="toggle-panel toggle-left">
-                            <h1>Welcome Back!</h1>
-                            <p>Enter your personal details to use all site features</p>
-                            <button class="hidden" id="login">Sign In</button>
+                            <h1>Witamy ponownie!</h1>
+                            <p>Wprowadź swoje dane osobowe, aby korzystać ze wszystkich funkcji strony</p>
+                            <button class="hidden" id="login">Zaloguj się</button>
                         </div>
                         <div class="toggle-panel toggle-right">
-                            <h1>Hello, Friend!</h1>
-                            <p>Register with your personal details to use all site features</p>
-                            <button class="hidden" id="register">Sign Up</button>
+                            <h1>Nie posiadasz jeszcze konta?</h1>
+                            <p>Zarejestruj się, aby korzystać ze wszystkich funkcji strony</p>
+                            <button class="hidden" id="register">Zarejestruj się</button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-
 
     <footer>
         <%- include('../partials/public/footer.ejs');%>

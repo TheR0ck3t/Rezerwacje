@@ -1,0 +1,28 @@
+<div class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand" href="/dashboard">
+            <i class="fas fa-calendar-alt me-2"></i> Rezerwacje Sal
+        </a>
+        <!-- Links -->
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/dashboard">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/bookings">Twoje rezerwacje</a>
+            </li>
+        </ul>
+        <!-- Dropdown Menu -->
+        <div class="dropdown user-menu">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                <span id="userName">Wczytywanie...</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuButton">
+                <li><a class="dropdown-item" href="/settings">Ustawienia konta</a></li>
+                <li><button class="dropdown-item text-danger" id="logout">Wyloguj się</button></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="/scripts/protected/header.js"></script>

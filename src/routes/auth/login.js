@@ -16,12 +16,19 @@ router.post('/', async(req, res) => {
     }
 
     try {
-        // Check if user exists
+        // Check if user exists and is active
         const user = await db.oneOrNone('SELECT * FROM users WHERE email = $1', [email]);
         if (!user) {
             console.log('User not found');
             return res.status(401).json({ error: 'Invalid email or password' });
         }
+
+        if (!user.is_active) {
+            console.log('User is not active');
+            return res.status(401).json({ error: 'User is not active' });
+        }
+
+
 
         console.log('User found:', user);
         console.log(user.id);

@@ -1,0 +1,70 @@
+/* Nagłówek dla zalogowanych użytkowników */
+
+.navbar {
+    padding: 15px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
+
+.navbar-brand:hover {
+    color: #0056b3;
+}
+
+.navbar-nav .nav-item .nav-link {
+    color: #555;
+    font-size: 1rem;
+    margin-right: 15px;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #007bff;
+}
+
+.user-menu {
+    position: relative;
+}
+
+.user-menu .btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+}
+
+.user-menu .dropdown-menu {
+    min-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown-item.text-danger {
+    color: #dc3545;
+}
+
+.dropdown-item.text-danger:hover {
+    background-color: #f8d7da;
+}

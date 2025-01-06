@@ -1,0 +1,108 @@
+/* Podstawowa kontenerka */
+
+.settings-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+/* Siatka */
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+
+/* Karty */
+
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #e9ecef;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+
+/* Przyciski */
+
+.btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
+
+/* Responsywność */
+
+@media (max-width: 768px) {
+    .card-header {
+        font-size: 1rem;
+    }
+    .btn {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* Dodaj maksymalną wysokość dla rozwijanych kart */
+
+.collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.collapse.show {
+    max-height: 1000px;
+    /* Ustaw odpowiednią maksymalną wysokość */
+}
