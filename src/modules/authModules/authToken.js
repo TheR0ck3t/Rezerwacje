@@ -15,7 +15,7 @@ module.exports = async(req, res, next) => {
             return res.status(err.name === 'TokenExpiredError' ? 401 : 403).json({ message: 'Invalid token' });
         }
         try {
-            const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', [decoded.id]);
+            const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', [decoded.userId]);
             if (!user) {
                 return res.status(404).json({ message: 'User not found' });
             }

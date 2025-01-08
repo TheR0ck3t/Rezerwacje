@@ -59,7 +59,7 @@ router.post('/', async(req, res) => {
         console.log('2FA is not enabled');
 
         // If 2FA is not required, generate JWT token and proceed
-        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         // Set cookies for token and userId
         res.cookie('token', token, {

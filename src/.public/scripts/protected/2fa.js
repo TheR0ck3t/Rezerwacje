@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     }
 
+    let is2FAEnabled = false; // Zmienna do przechowywania stanu 2FA
+
     // Function to check 2FA status
     async function check2FAStatus() {
         const userId = getCookie('userId'); // Get user ID from cookies
@@ -29,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
             });
             const { enabled } = response.data;
+            is2FAEnabled = enabled; // Ustawienie stanu 2FA
+            console.log(enabled);
             // Update the button text based on the 2FA status
             if (enabled) {
                 button.innerText = 'Wyłącz weryfikację dwuetapową';
@@ -52,9 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const button = document.getElementById('enable-2fa'); // Button to toggle 2FA enable/disable
 
-        // Check if 2FA is already enabled
-        const is2FAEnabled = button.innerText === 'Disable 2FA';
-
         try {
             if (is2FAEnabled) {
                 // If 2FA is enabled, send request to disable it
@@ -70,7 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Ensure response is handled
                 if (response.data.message === '2FA disabled') {
                     alert('2FA has been disabled');
-                    button.innerText = 'Enable 2FA'; // Change button text to enable 2FA
+                    button.innerText = 'Włącz weryfikację dwuetapową'; // Change button text to enable 2FA
+                    is2FAEnabled = false; // Aktualizacja stanu 2FA
                 } else {
                     alert('Failed to disable 2FA');
                 }
@@ -115,7 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         if (enableResponse.data.message === '2FA enabled') {
                             alert('2FA has been enabled');
-                            button.innerText = 'Disable 2FA'; // Change button text to disable 2FA
+                            button.innerText = 'Wyłącz weryfikację dwuetapową'; // Change button text to disable 2FA
+                            is2FAEnabled = true; // Aktualizacja stanu 2FA
+                            qrImage.src = ''; // Clear QR code
+                            qrImage.style.display = 'none'; // Hide QR code
                         } else {
                             alert('Failed to enable 2FA');
                         }
