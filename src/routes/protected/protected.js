@@ -33,7 +33,7 @@ router.get('/user', authToken, async(req, res) => {
         // Pobieranie danych użytkownika z bazy danych
         const result = await db.oneOrNone('SELECT first_name, last_name, phone_number FROM users WHERE id = $1', [user.id]);
         if (!result) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'User not found uwu' });
         }
     } catch (error) {
         console.error('Error fetching user:', error);

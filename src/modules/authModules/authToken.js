@@ -9,11 +9,11 @@ module.exports = async(req, res, next) => {
     }
 
     jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
+        console.log(decoded);
         if (err) {
             console.error('Error verifying token:', err.message);
             return res.status(err.name === 'TokenExpiredError' ? 401 : 403).json({ message: 'Invalid token' });
         }
-
         try {
             const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', [decoded.id]);
             if (!user) {

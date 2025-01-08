@@ -63,7 +63,7 @@ router.post('/enable', async(req, res) => {
         const encryptedSecret = encrypt(secret);
 
         // Update the user with the 2FA secret
-        await db.none('UPDATE users SET two_factor_secret = $1 WHERE id = $2', [encryptedSecret, userId]);
+        await db.none('UPDATE users SET two_factor_secret = $1 WHERE id = $2', [encryptedSecret, user.id]);
 
         res.status(200).json({ message: '2FA enabled' });
     } catch (error) {
@@ -85,7 +85,7 @@ router.post('/disable', async(req, res) => {
         }
 
         // Update the user with the 2FA secret
-        await db.none('UPDATE users SET two_factor_secret = NULL WHERE id = $1', [userId]);
+        await db.none('UPDATE users SET two_factor_secret = NULL WHERE id = $1', [user.id]);
 
         res.status(200).json({ message: '2FA disabled' });
     } catch (error) {
@@ -94,10 +94,10 @@ router.post('/disable', async(req, res) => {
     }
 });
 
-
 // Verify 2FA
 router.post('/verify', async(req, res) => {
     const { userId, token } = req.body;
+    console.log('Received request to verify 2FA token:', token, userId);
     console.log(`Verifying ${token} for user ${userId}`);
 
     try {
@@ -121,7 +121,7 @@ router.post('/verify', async(req, res) => {
         if (!isValid) {
             return res.status(400).json({ error: 'Invalid 2FA token' });
         } else {
-            const authToken = jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const authToken = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
             // Set cookies for token and userId
             res.cookie('token', authToken, {
@@ -129,13 +129,13 @@ router.post('/verify', async(req, res) => {
                 secure: process.env.NODE_ENV === 'production',
                 maxAge: 3600000 // 1 hour
             });
-            res.cookie('userId', userId.toString(), {
+            res.cookie('userId', user.id, {
                 httpOnly: false,
                 secure: process.env.NODE_ENV === 'production',
                 maxAge: 3600000 // 1 hour
             });
 
-            console.log('Cookies set for user:', userId);
+            console.log('Cookies set for user:', user.id);
 
             res.status(200).json({ message: '2FA token is valid', token: authToken });
         }
@@ -144,7 +144,6 @@ router.post('/verify', async(req, res) => {
         res.status(500).json({ error: 'Failed to verify 2FA' });
     }
 });
-
 
 // Check 2FA status
 router.get('/status/:userId', async(req, res) => {
