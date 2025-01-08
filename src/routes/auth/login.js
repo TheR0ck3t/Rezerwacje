@@ -30,8 +30,7 @@ router.post('/', async(req, res) => {
 
 
 
-        console.log('User found:', user);
-        console.log(user.id);
+        console.log('User found:', user.email);
 
         // Compare password
         const isMatch = await comparePasswords(password, user.password);
@@ -76,7 +75,7 @@ router.post('/', async(req, res) => {
             maxAge: 3600000 // 1 hour
         });
 
-        console.log('Cookies set for user:', user.id);
+        console.log('Cookies set for user:', user.email);
 
         // Update last login attempt
         try {

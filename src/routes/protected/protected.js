@@ -47,7 +47,6 @@ router.get('/user', authToken, async(req, res) => {
             email: user.email || null, // Email (zawsze wymagany)
             phoneNumber: user.phone_number || null // Numer telefonu (jeśli istnieje)
         };
-        console.log(responseData);
 
         // Wysłanie danych użytkownika
         res.status(200).json(responseData);
@@ -58,10 +57,8 @@ router.get('/user', authToken, async(req, res) => {
 });
 
 router.put('/user/info', authToken, async(req, res) => {
-    const user = req.user; // Zakładamy, że middleware `authToken` dodaje dane użytkownika do `req.user`
+    const user = req.user;
     const { firstName, lastName, phoneNumber } = req.body;
-    console.log('uwuwuwuwu', user.id)
-    console.log(firstName, lastName, phoneNumber);
     // Walidacja danych
     if (!firstName || !lastName || !phoneNumber) {
         return res.status(400).json({ error: 'Missing first name, last name or phone number' });
@@ -77,7 +74,7 @@ router.put('/user/info', authToken, async(req, res) => {
 })
 
 router.put('/user/password', authToken, async(req, res) => {
-    const user = req.user; // Zakładamy, że middleware `authToken` dodaje dane użytkownika do `req.user`
+    const user = req.user;
     const { oldPassword, newPassword, newPasswordConfirm } = req.body;
     // Walidacja danych
     if (!oldPassword || !newPassword || !newPasswordConfirm) {
@@ -111,7 +108,7 @@ router.put('/user/password', authToken, async(req, res) => {
 
 // Wczytywanie rezerwacji
 router.get('/reservations', authToken, async(req, res) => {
-    const user = req.user; // Zakładamy, że middleware `authToken` dodaje dane użytkownika do `req.user`
+    const user = req.user;
     try {
         // Pobieranie rezerwacji użytkownika z bazy danych
         const reservations = await db.query('SELECT * FROM reservations WHERE user_id = $1', [user.id]);
@@ -139,9 +136,48 @@ router.get('/reservations', authToken, async(req, res) => {
     }
 });
 
+// Tworzenie rezerwacji
+router.post('/reservations/create', authToken, async(req, res) => {
+    const { roomId, start, end, notes } = req.body;
+    const userId = req.user.id;
+
+    try {
+        // Sprawdzenie dostępności pokoju
+        const overlappingReservations = await db.query(
+            `SELECT * FROM reservations 
+            WHERE room_id = $1 AND (
+                (start_time < $2 AND end_time > $3) OR
+                (start_time BETWEEN $3 AND $2) OR
+                (end_time BETWEEN $3 AND $2)
+            )`, [roomId, end, start]
+        );
+
+        if (overlappingReservations.length > 0) {
+            return res.status(400).json({ error: 'Wybrany pokój jest już zarezerwowany w podanych terminach.' });
+        }
+
+        // Tworzenie rezerwacji
+        await db.query(
+            `INSERT INTO reservations (user_id, room_id, start_time, end_time, status, notes, created_at) 
+            VALUES ($1, $2, $3, $4, 'pending', $5, NOW())`, [userId, roomId, start, end, notes]
+        );
+
+        // Wyślij potwierdzenie e-mail
+        const userEmail = req.user.email;
+        const roomDetails = await db.one('SELECT details->>\'name\' AS name FROM rooms WHERE id = $1', [roomId]);
+
+        await sendConfirmationEmail(userEmail, roomDetails.name, start, end);
+
+        res.status(200).json({ message: 'Rezerwacja została utworzona.' });
+    } catch (error) {
+        console.error('Error creating reservation:', error);
+        res.status(500).json({ error: 'Nie udało się utworzyć rezerwacji.' });
+    }
+});
+
 // Usuwanie rezerwacji
 router.delete('/reservations/:id', authToken, async(req, res) => {
-    const user = req.user; // Zakładamy, że middleware `authToken` dodaje dane użytkownika do `req.user`
+    const user = req.user;
     const { id } = req.params;
     try {
         // Usunięcie rezerwacji z bazy danych
@@ -150,6 +186,85 @@ router.delete('/reservations/:id', authToken, async(req, res) => {
     } catch (error) {
         console.error('Error deleting booking:', error);
         res.status(500).json({ error: 'Failed to delete booking' });
+    }
+});
+
+// Wyświetlanie pokoi pasujących do zakresu danych
+router.get('/rooms/get', authToken, async(req, res) => {
+    try {
+        const { start_time, end_time, min_capacity = 1, min_price = 1, max_price = 100000 } = req.query;
+
+        if (!start_time || !end_time) {
+            return res.status(400).json({ error: 'Brak wymaganych parametrów: start_time i end_time' });
+        }
+
+        const query = `
+            SELECT 
+                r.id AS room_id,
+                r.capacity,
+                r.price_per_1h,
+                r.details->>'name' AS name,
+                r.details->>'location' AS location,
+                r.details->>'description' AS description,
+                r.details->'images' AS images
+            FROM 
+                rooms r
+            LEFT OUTER JOIN 
+                reservations res ON r.id = res.room_id 
+                AND (
+                    res.start_time < $2::timestamp
+                    AND res.end_time > $1::timestamp
+                )
+            WHERE 
+                r.capacity >= $3
+                AND r.price_per_1h::numeric >= $4
+                AND r.price_per_1h::numeric <= $5
+                AND res.id IS NULL
+            ORDER BY 
+                r.price_per_1h::numeric ASC;
+        `;
+
+        const values = [start_time, end_time, min_capacity, min_price, max_price];
+
+        const result = await db.query(query, values);
+
+        const rooms = result.map((room) => ({
+            id: room.room_id,
+            capacity: room.capacity,
+            pricePer1h: room.price_per_1h,
+            name: room.name,
+            location: room.location,
+            description: room.description,
+            images: room.images
+        }));
+
+        res.status(200).json(rooms);
+    } catch (error) {
+        console.error('Error fetching rooms:', error);
+        res.status(500).json({ error: 'Failed to fetch rooms' });
+    }
+});
+
+// Wyświetlanie szczegółów pokoju/sali
+router.get('/rooms/:id', authToken, async(req, res) => {
+    id = req.params.id;
+    try {
+        // Pobieranie szczegółów pokoju z bazy danych
+        const room = await db.oneOrNone('SELECT * FROM rooms WHERE id = $1', [id]);
+        if (!room) {
+            return res.status(404).json({ error: 'Room not found' });
+        }
+        const roomDetails = {
+            id: room.id,
+            capacity: room.capacity,
+            pricePer1h: room.price_per_1h,
+            ...room.details,
+        };
+
+        res.status(200).json(roomDetails);
+    } catch (error) {
+        console.error('Error fetching room details:', error);
+        res.status(500).json({ error: 'Failed to fetch room details' });
     }
 });
 

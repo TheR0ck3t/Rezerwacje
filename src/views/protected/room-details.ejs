@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+        <link rel="stylesheet" href="/styles/protected/room-details.css">
+        <title>Szczegóły pokoju</title>
+</head>
+
+<body>
+    <%- include('../partials/protected/header.ejs') %>
+
+        <main class="container room-details-page">
+            <!-- Nazwa pokoju na samej górze -->
+            <h1 id="roomName" class="room-title">Ładowanie nazwy pokoju...</h1>
+
+            <!-- Siatka szczegółów pokoju -->
+            <div class="grid-container">
+                <!-- Carousel ze zdjęciami -->
+                <div class="grid-item carousel-container">
+                    <div id="carousel-room-images" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner" id="carouselImages">
+                            <p class="text-muted">Ładowanie zdjęć...</p>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-room-images" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-room-images" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    </div>
+                </div>
+
+                <!-- Podsumowanie rezerwacji -->
+                <div class="grid-item reservation-summary-container">
+                    <h3>Podsumowanie rezerwacji</h3>
+                    <p><strong>Data rozpoczęcia:</strong> <span id="startDateSummary"></span></p>
+                    <p><strong>Data zakończenia:</strong> <span id="endDateSummary"></span></p>
+                    <p><strong>Łączna cena:</strong> <span id="totalPrice"></span> PLN</p>
+                    <button id="reserveButton" class="btn btn-primary mt-3">Zarezerwuj</button>
+                </div>
+
+                <!-- Szczegóły i opis pokoju -->
+                <div class="grid-item details-container">
+                    <p><strong>Lokalizacja:</strong> <span id="roomLocation">Ładowanie...</span></p>
+                    <p><strong>Pojemność:</strong> <span id="roomCapacity">Ładowanie...</span> osób</p>
+                    <p><strong>Cena za godzinę:</strong> <span id="roomPrice">Ładowanie...</span> PLN</p>
+
+                    <h2>Opis pokoju</h2>
+                    <p id="roomDescription">Ładowanie opisu...</p>
+                </div>
+            </div>
+        </main>
+
+        <script src="/scripts/protected/room-details.js"></script>
+        <%- include('../partials/public/footer.ejs') %>
+</body>
+
+</html>

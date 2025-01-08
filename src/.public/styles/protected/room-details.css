@@ -1,0 +1,50 @@
+.room-details-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.room-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Dwie kolumny */
+    gap: 20px;
+}
+
+.carousel-container {
+    grid-column: 1 / span 2;
+    /* Zajmuje oba pola w pierwszym rzędzie */
+}
+
+.reservation-summary-container,
+.details-container {
+    background-color: #f9f9f9;
+    border: 1px solid #e9ecef;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.reservation-summary-container {
+    grid-column: 1 / 2;
+    grid-row: 2;
+}
+
+.details-container {
+    grid-column: 2 / 3;
+    grid-row: 2;
+}
+
+.carousel-container img {
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}

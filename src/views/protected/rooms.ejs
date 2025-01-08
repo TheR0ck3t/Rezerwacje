@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+        <link rel="stylesheet" href="/styles/protected/rooms.css">
+        <title>Lista Pokoi</title>
+</head>
+
+<body>
+    <%- include('../partials/protected/header.ejs') %>
+
+        <main class="container rooms-page">
+            <h1 class="text-center mb-4">Dostępne Sale</h1>
+            <form id="filterForm" class="mb-4">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label for="start_time" class="form-label">Data rozpoczęcia</label>
+                        <input type="datetime-local" id="start_time" class="form-control" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="end_time" class="form-label">Data zakończenia</label>
+                        <input type="datetime-local" id="end_time" class="form-control" required>
+                        <small class="text-muted">Data zakończenia musi być późniejsza niż data rozpoczęcia.</small>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="min_capacity" class="form-label">Min. Pojemność</label>
+                        <input type="number" id="min_capacity" class="form-control" min="1" value="1">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="min_price" class="form-label">Min. Cena</label>
+                        <input type="number" id="min_price" class="form-control" min="1" value="1">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="max_price" class="form-label">Max. Cena</label>
+                        <input type="number" id="max_price" class="form-control" min="1" value="1000">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary w-100">Filtruj</button>
+                    </div>
+                </div>
+            </form>
+            <div id="roomsContainer" class="row">
+                <!-- Karty z pokojami generowane dynamicznie -->
+            </div>
+        </main>
+
+        <script src="/scripts/protected/rooms.js"></script>
+        <footer>
+            <%- include('../partials/public/footer.ejs') %>
+        </footer>
+</body>
+
+</html>
