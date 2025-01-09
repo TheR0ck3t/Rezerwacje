@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const { enabled } = response.data;
             is2FAEnabled = enabled; // Ustawienie stanu 2FA
-            console.log(enabled);
             // Update the button text based on the 2FA status
             if (enabled) {
                 button.innerText = 'Wyłącz weryfikację dwuetapową';
