@@ -54,7 +54,6 @@ router.post('/enable', async(req, res) => {
 
         // Verify the token
         const totp = new TOTP({ secret: Secret.fromBase32(secret), algorithm: 'SHA256', digits: 6, period: 30 });
-        console.log(totp);
         const isValid = totp.validate({ token, window: 1 }) !== null;
         if (!isValid) {
             return res.status(400).json({ error: 'Invalid 2FA token' });
@@ -86,7 +85,6 @@ router.post('/disable', async(req, res) => {
         }
 
         // Update the user with the 2FA secret
-        console.log('test')
         await db.none('UPDATE users SET two_factor_secret = NULL WHERE id = $1', [user.id]);
 
         res.status(200).json({ message: '2FA disabled' });

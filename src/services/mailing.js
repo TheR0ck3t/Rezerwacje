@@ -29,7 +29,28 @@ async function sendVerificationEmail(email, token) {
         throw new Error('Failed to send verification email');
     }
 }
+async function sendPasswordResetEmail(email, token) {
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}`;
+
+    const mailOptions = {
+        from: process.env.MAIL_FROM,
+        to: email,
+        subject: 'Reset your password',
+        html: `<p>We received a request to reset your password. If it was you, click the link below to reset your password:</p>
+               <p><a href="${resetLink}">Reset Password</a></p>
+               <p>If you did not request this, you can safely ignore this email.</p>`
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('Password reset email sent to:', email);
+    } catch (error) {
+        console.error('Error sending password reset email:', error);
+        throw new Error('Failed to send password reset email');
+    }
+}
 
 module.exports = {
     sendVerificationEmail,
+    sendPasswordResetEmail,
 };

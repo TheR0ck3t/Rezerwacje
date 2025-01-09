@@ -9,7 +9,6 @@ module.exports = async(req, res, next) => {
     }
 
     jwt.verify(token, process.env.JWT_SECRET, async(err, decoded) => {
-        console.log(decoded);
         if (err) {
             console.error('Error verifying token:', err.message);
             return res.status(err.name === 'TokenExpiredError' ? 401 : 403).json({ message: 'Invalid token' });
@@ -27,5 +26,3 @@ module.exports = async(req, res, next) => {
         }
     });
 };
-
-// UWU

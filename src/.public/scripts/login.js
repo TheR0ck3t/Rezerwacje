@@ -46,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         loginForm.addEventListener('reset', (e) => {
-            console.log('Login form cancelled');
             window.location.href = '/'; // Redirect to home page
         });
     }
