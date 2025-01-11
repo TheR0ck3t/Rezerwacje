@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../partials/head.ejs') %>
+        <link rel="stylesheet" href="/styles/public/errors/404.css">
+        <title>Błąd 404 - Strona nie znaleziona</title>
+</head>
+
+<body>
+    <%- include('../../partials/public/header.ejs') %>
+
+        <main class="container text-center error-page">
+            <h1>404</h1>
+            <p>Nie znaleźliśmy strony, której szukasz.</p>
+            <a href="/" class="btn btn-primary mt-4">Wróć na stronę główną</a>
+        </main>
+
+        <footer>
+            <%- include('../../partials/public/footer.ejs') %>
+        </footer>
+</body>
+
+</html>

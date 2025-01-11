@@ -1,11 +1,17 @@
 /* Nagłówek dla niezalogowanych użytkowników */
 
+
+/* Stylizacja paska nawigacyjnego */
+
 .navbar {
     padding: 15px 20px;
     background-color: #f8f9fa;
     border-bottom: 1px solid #e9ecef;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+
+/* Stylizacja marki w pasku nawigacyjnym */
 
 .navbar-brand {
     font-size: 1.5rem;
@@ -25,6 +31,9 @@
     color: #0056b3;
 }
 
+
+/* Stylizacja przycisku rozwijania menu */
+
 .navbar-toggler {
     border: none;
     color: #007bff;
@@ -35,6 +44,9 @@
     outline: none;
     box-shadow: none;
 }
+
+
+/* Stylizacja linków w pasku nawigacyjnym */
 
 .navbar-nav .nav-item .nav-link {
     color: #555;
@@ -48,7 +60,7 @@
 }
 
 
-/* Przyciski logowania i rejestracji */
+/* Stylizacja przycisków logowania i rejestracji */
 
 .auth-buttons .btn {
     font-size: 1rem;

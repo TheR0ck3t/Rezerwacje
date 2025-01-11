@@ -4,19 +4,20 @@ const db = require('../../modules/dbModules/db');
 const jwt = require('jsonwebtoken');
 const { comparePasswords } = require('../../modules/authModules/userAuth');
 
+// Endpoint do logowania
 router.post('/', async(req, res) => {
     const { email, password, token2fa } = req.body;
 
     console.log('Received request to login with email:', email);
 
-    // Validate email and password
+    // Walidacja emaila i hasła
     if (!email || !password) {
         console.log('Missing email or password');
         return res.status(400).json({ error: 'Missing email or password' });
     }
 
     try {
-        // Check if user exists and is active
+        // Sprawdzenie, czy użytkownik istnieje i jest aktywny
         const user = await db.oneOrNone('SELECT * FROM users WHERE email = $1', [email]);
         if (!user) {
             console.log('User not found');
@@ -30,7 +31,7 @@ router.post('/', async(req, res) => {
 
         console.log('User found:', user.email);
 
-        // Compare password
+        // Porównanie hasła
         const isMatch = await comparePasswords(password, user.password);
         if (!isMatch) {
             console.log('Password mismatch');
@@ -39,7 +40,7 @@ router.post('/', async(req, res) => {
 
         console.log('Password matched');
 
-        // Check if 2FA is enabled
+        // Sprawdzenie, czy 2FA jest włączone
         if (user.two_factor_secret) {
             console.log('2FA is enabled');
 
@@ -48,7 +49,7 @@ router.post('/', async(req, res) => {
                 return res.redirect(307, '/auth/2fa/verify');
             }
 
-            // if 2FA is not provided, prompt for 2FA
+            // Jeśli 2FA nie jest podane, poproś o 2FA
             console.log('Prompting for 2FA');
             return res.status(200).json({
                 requires2FA: true,
@@ -58,24 +59,24 @@ router.post('/', async(req, res) => {
 
         console.log('2FA is not enabled');
 
-        // If 2FA is not required, generate JWT token and proceed
+        // Jeśli 2FA nie jest wymagane, wygeneruj token JWT i kontynuuj
         const token = jwt.sign({ userId: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Set cookies for token and userId
+        // Ustawienie ciasteczek dla tokena i userId
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            maxAge: 3600000 // 1 hour
+            maxAge: 3600000 // 1 godzina
         });
         res.cookie('userId', user.id.toString(), {
-            httpOnly: false, // Set to false for frontend access
-            secure: process.env.NODE_ENV === 'production', // Set to false for local dev
-            maxAge: 3600000 // 1 hour
+            httpOnly: false, // Ustaw na false dla dostępu z frontendu
+            secure: process.env.NODE_ENV === 'production', // Ustaw na false dla lokalnego dev
+            maxAge: 3600000 // 1 godzina
         });
 
         console.log('Cookies set for user:', user.email);
 
-        // Update last login attempt
+        // Aktualizacja ostatniego logowania
         try {
             await db.oneOrNone('UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE email = $1', [email]);
             console.log('Last login updated for user:', email);

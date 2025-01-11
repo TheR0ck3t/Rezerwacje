@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 
             startDateSummary.textContent = start.toLocaleString();
             endDateSummary.textContent = end.toLocaleString();
-            totalPriceElement.textContent = `${totalPrice.toFixed(2)} PLN`;
+            totalPriceElement.textContent = `${totalPrice.toFixed(2)} zł`;
 
             reservationSummary.style.display = 'block';
 
@@ -76,8 +76,12 @@ document.addEventListener('DOMContentLoaded', async() => {
                 };
 
                 try {
-                    await axios.post('/reservations/create', formData, { withCredentials: true });
-                    alert('Rezerwacja została pomyślnie utworzona! Szczegóły wysłano na Twój e-mail.');
+                    const response = await axios.post('/reservations/create', formData, { withCredentials: true });
+                    console.log(response);
+                    if (response.data.redirect) {
+                        window.location.href = response.data.redirect;
+                        return;
+                    }
                 } catch (error) {
                     console.error('Error creating reservation:', error.response ? error.response.data : error.message);
                     alert('Nie udało się utworzyć rezerwacji. Spróbuj ponownie później.');

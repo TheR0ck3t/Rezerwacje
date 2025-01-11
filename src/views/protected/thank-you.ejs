@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/head.ejs') %>
+        <link rel="stylesheet" href="/styles/protected/thank-you.css">
+        <title>Dziękujemy za rezerwację</title>
+</head>
+
+<body>
+    <%- include('../partials/protected/header.ejs') %>
+
+        <main class="container text-center thanks-page py-5">
+            <h1 class="fw-bold">Dziękujemy za Twoją rezerwację!</h1>
+            <p class="mt-3">Twoja rezerwacja została pomyślnie złożona. Wkrótce otrzymasz potwierdzenie na podany adres e-mail.</p>
+            <a href="/" class="btn btn-primary mt-4">Wróć na stronę główną</a>
+        </main>
+
+        <footer>
+            <%- include('../partials/public/footer.ejs') %>
+        </footer>
+</body>
+
+</html>

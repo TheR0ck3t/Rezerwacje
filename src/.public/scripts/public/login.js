@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Attach the login form submit handler
+    // Podłącz obsługę formularza logowania
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', async(e) => {
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    withCredentials: true // Important for sending cookies with the request
+                    withCredentials: true // Ważne dla wysyłania ciasteczek z żądaniem
                 });
 
                 const data = response.data;
@@ -26,11 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.requires2FA) {
                         show2FAModal(data.userId);
                     } else {
-                        window.location.href = '/dashboard'; // Redirect to dashboard
+                        window.location.href = '/dashboard'; // Przekierowanie do panelu
                     }
                 } else {
                     console.log('Error: ' + data.status);
-                    alert(data.error || 'Failed to log in. Please try again later');
+                    alert(data.error || 'Nie udało się zalogować. Spróbuj ponownie później');
                 }
             } catch (error) {
                 console.error(error);
@@ -41,35 +41,35 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert('Nieprawidłowy email lub hasło.');
                     }
                 } else {
-                    alert('Failed to log in. Reason: ' + (error.message || 'Please try again later'));
+                    alert('Nie udało się zalogować. Powód: ' + (error.message || 'Spróbuj ponownie później'));
                 }
             }
         });
         loginForm.addEventListener('reset', (e) => {
-            window.location.href = '/'; // Redirect to home page
+            window.location.href = '/'; // Przekierowanie na stronę główną
         });
     }
 
-    // Function to show 2FA modal
+    // Funkcja do wyświetlania okna modalnego 2FA
     function show2FAModal(userId) {
         const twoFaModal = document.getElementById('twoFaModal');
         if (!twoFaModal) {
-            console.error('2FA modal not found');
+            console.error('Nie znaleziono okna modalnego 2FA');
             return;
         }
 
         twoFaModal.style.display = 'block';
 
-        // Handle 2FA verification
+        // Obsługa weryfikacji 2FA
         const submit2faButton = document.getElementById('submitTwoFa');
         if (!submit2faButton) {
-            console.error('Submit 2FA button not found');
+            console.error('Nie znaleziono przycisku do wysyłania 2FA');
             return;
         }
 
         submit2faButton.addEventListener('click', async(e) => {
             const token2fa = document.getElementById('twoFaInput').value;
-            console.log('Sending 2FA verification request', { userId, token: token2fa });
+            console.log('Wysyłanie żądania weryfikacji 2FA', { userId, token: token2fa });
             try {
                 const response = await axios.post('auth/2fa/verify', {
                     userId,
@@ -78,24 +78,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    withCredentials: true // Important for sending cookies with the request
+                    withCredentials: true // Ważne dla wysyłania ciasteczek z żądaniem
                 });
 
                 const data = response.data;
 
                 if (response.status === 200) {
-                    // Redirect to dashboard after successful 2FA verification
+                    // Przekierowanie do panelu po pomyślnej weryfikacji 2FA
                     window.location.href = '/dashboard';
                 } else {
-                    alert(data.error || 'Failed to verify 2FA. Please try again later');
+                    alert(data.error || 'Nie udało się zweryfikować 2FA. Spróbuj ponownie później');
                 }
             } catch (error) {
                 console.error(error);
-                alert('Failed to verify 2FA. Please try again later');
+                alert('Nie udało się zweryfikować 2FA. Spróbuj ponownie później');
             }
         });
 
-        // Close the modal window
+        // Zamknięcie okna modalnego
         window.addEventListener('click', (e) => {
             if (e.target === twoFaModal) {
                 twoFaModal.style.display = 'none';

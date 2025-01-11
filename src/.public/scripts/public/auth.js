@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerBtn = document.getElementById('register');
     const loginBtn = document.getElementById('login');
 
-    // Check URL parameters to set the initial view
+    // Sprawdź parametry URL, aby ustawić początkowy widok
     const urlParams = new URLSearchParams(window.location.search);
     const view = urlParams.get('view');
 

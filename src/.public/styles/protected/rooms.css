@@ -1,35 +1,15 @@
+/* Stylizacja strony z pokojami */
+
 .rooms-page {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-.card {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
+/* Stylizacja kart */
 
-.card-title {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-}
-
-.card-text {
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-}
-
-.img-fluid {
-    max-height: 150px;
-    object-fit: cover;
-}
-
+.card,
 .room-card {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -38,10 +18,38 @@
     /* Ustawienie szerokości na 100% */
 }
 
+.card:hover,
 .room-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
+
+
+/* Stylizacja tytułów kart */
+
+.card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+
+/* Stylizacja tekstu w kartach */
+
+.card-text {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+
+/* Stylizacja obrazków */
+
+.img-fluid {
+    max-height: 150px;
+    object-fit: cover;
+}
+
+
+/* Stylizacja kontenera obrazków */
 
 .image-container {
     position: relative;
@@ -52,12 +60,18 @@
     justify-content: center;
 }
 
+
+/* Stylizacja obrazków w kontenerze */
+
 .image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: opacity 0.5s ease;
 }
+
+
+/* Stylizacja głównego obrazka */
 
 .main-image {
     position: absolute;

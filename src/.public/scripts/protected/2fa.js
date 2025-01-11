@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Helper function to get cookie by name
+    // Funkcja pomocnicza do pobierania ciasteczka po nazwie
     function getCookie(name) {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
@@ -14,76 +14,76 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let is2FAEnabled = false; // Zmienna do przechowywania stanu 2FA
 
-    // Function to check 2FA status
+    // Funkcja do sprawdzania statusu 2FA
     async function check2FAStatus() {
-        const userId = getCookie('userId'); // Get user ID from cookies
+        const userId = getCookie('userId'); // Pobierz ID użytkownika z ciasteczek
         if (!userId) {
-            console.error('User ID not found in cookies');
+            console.error('Nie znaleziono ID użytkownika w ciasteczkach');
             return;
         }
-        const button = document.getElementById('enable-2fa'); // Button to toggle 2FA enable/disable
+        const button = document.getElementById('enable-2fa'); // Przycisk do włączania/wyłączania 2FA
 
         try {
             const response = await axios.get(`/auth/2fa/status/${userId}`, {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${getCookie('token')}`, // Get token from cookies
+                    'Authorization': `Bearer ${getCookie('token')}`, // Pobierz token z ciasteczek
                 },
             });
             const { enabled } = response.data;
             is2FAEnabled = enabled; // Ustawienie stanu 2FA
-            // Update the button text based on the 2FA status
+            // Aktualizacja tekstu przycisku na podstawie statusu 2FA
             if (enabled) {
                 button.innerText = 'Wyłącz weryfikację dwuetapową';
             } else {
                 button.innerText = 'Włącz weryfikację dwuetapową';
             }
         } catch (error) {
-            console.error('Error fetching 2FA status:', error);
+            console.error('Błąd podczas pobierania statusu 2FA:', error);
         }
     }
 
-    // Check 2FA status on page load
+    // Sprawdź status 2FA po załadowaniu strony
     check2FAStatus();
 
-    // Event listener for enabling/disabling 2FA
+    // Nasłuchiwanie zdarzeń dla włączania/wyłączania 2FA
     document.getElementById('enable-2fa').addEventListener('click', async function() {
-        const userId = getCookie('userId'); // Get user ID from cookies
+        const userId = getCookie('userId'); // Pobierz ID użytkownika z ciasteczek
         if (!userId) {
-            console.error('User ID not found in cookies');
+            console.error('Nie znaleziono ID użytkownika w ciasteczkach');
             return;
         }
-        const button = document.getElementById('enable-2fa'); // Button to toggle 2FA enable/disable
+        const button = document.getElementById('enable-2fa'); // Przycisk do włączania/wyłączania 2FA
 
         try {
             if (is2FAEnabled) {
-                // If 2FA is enabled, send request to disable it
+                // Jeśli 2FA jest włączone, wyślij żądanie do wyłączenia
                 const response = await axios.post('/auth/2fa/disable', {
                     userId,
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${getCookie('token')}`, // Get token from cookies
+                        'Authorization': `Bearer ${getCookie('token')}`, // Pobierz token z ciasteczek
                     },
                 });
 
-                // Ensure response is handled
+                // Upewnij się, że odpowiedź jest obsłużona
                 if (response.data.message === '2FA disabled') {
-                    alert('2FA has been disabled');
-                    button.innerText = 'Włącz weryfikację dwuetapową'; // Change button text to enable 2FA
+                    alert('2FA zostało wyłączone');
+                    button.innerText = 'Włącz weryfikację dwuetapową'; // Zmień tekst przycisku na włącz 2FA
                     is2FAEnabled = false; // Aktualizacja stanu 2FA
                 } else {
-                    alert('Failed to disable 2FA');
+                    alert('Nie udało się wyłączyć 2FA');
                 }
 
             } else {
-                // Generate 2FA secret and QR code
+                // Generowanie sekretu 2FA i kodu QR
                 const generateResponse = await axios.post('/auth/2fa/generate', {
                     userId,
                 }, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${getCookie('token')}`, // Get token from cookies
+                        'Authorization': `Bearer ${getCookie('token')}`, // Pobierz token z ciasteczek
                     },
                 });
 
@@ -95,14 +95,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Dodaj opóźnienie przed wyświetleniem okna dialogowego
                     setTimeout(async() => {
-                        // Prompt for 2FA token
-                        const token = prompt('Enter 2FA token:');
+                        // Poproś o token 2FA
+                        const token = prompt('Wprowadź token 2FA:');
                         if (!token) {
-                            alert('2FA token is required');
+                            alert('Token 2FA jest wymagany');
                             return;
                         }
 
-                        // Verify 2FA token and enable 2FA
+                        // Weryfikacja tokenu 2FA i włączenie 2FA
                         const enableResponse = await axios.post('/auth/2fa/enable', {
                             userId,
                             token,
@@ -110,27 +110,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         }, {
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': `Bearer ${getCookie('token')}`, // Get token from cookies
+                                'Authorization': `Bearer ${getCookie('token')}`, // Pobierz token z ciasteczek
                             },
                         });
 
                         if (enableResponse.data.message === '2FA enabled') {
-                            alert('2FA has been enabled');
-                            button.innerText = 'Wyłącz weryfikację dwuetapową'; // Change button text to disable 2FA
+                            alert('2FA zostało włączone');
+                            button.innerText = 'Wyłącz weryfikację dwuetapową'; // Zmień tekst przycisku na wyłącz 2FA
                             is2FAEnabled = true; // Aktualizacja stanu 2FA
-                            qrImage.src = ''; // Clear QR code
-                            qrImage.style.display = 'none'; // Hide QR code
+                            qrImage.src = ''; // Wyczyść kod QR
+                            qrImage.style.display = 'none'; // Ukryj kod QR
                         } else {
-                            alert('Failed to enable 2FA');
+                            alert('Nie udało się włączyć 2FA');
                         }
                     }, 500); // Opóźnienie 500 ms
                 } else {
-                    alert('Failed to generate 2FA secret');
+                    alert('Nie udało się wygenerować sekretu 2FA');
                 }
             }
         } catch (error) {
-            console.error('Error with 2FA setup:', error);
-            alert('Failed to change 2FA status');
+            console.error('Błąd podczas konfiguracji 2FA:', error);
+            alert('Nie udało się zmienić statusu 2FA');
         }
     });
 });

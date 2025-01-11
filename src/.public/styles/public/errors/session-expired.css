@@ -1,0 +1,17 @@
+.session-expired-page {
+    margin-top: 10%;
+}
+
+.session-expired-page h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.session-expired-page p {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.session-expired-page .btn {
+    font-size: 1.2rem;
+}

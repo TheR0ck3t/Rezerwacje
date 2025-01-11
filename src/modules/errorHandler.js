@@ -1,14 +1,14 @@
 const errorHandler = (err, req, res, next) => {
-    console.error('Error stack:', err.stack); // Log the error stack for debugging
-    console.error('Error message:', err.message); // Log the error message for debugging
-    console.error('Error status:', err.status); // Log the error status for debugging
-    console.error('Request path:', req.path); // Log the request path
-    console.error('Request method:', req.method); // Log the request method
+    console.error('Error stack:', err.stack); // Logowanie stosu błędu do debugowania
+    console.error('Error message:', err.message); // Logowanie komunikatu błędu do debugowania
+    console.error('Error status:', err.status); // Logowanie statusu błędu do debugowania
+    console.error('Request path:', req.path); // Logowanie ścieżki żądania
+    console.error('Request method:', req.method); // Logowanie metody żądania
 
     const isDevelopment = process.env.NODE_ENV === 'development';
 
     if (err.status === 404) {
-        // Send a 404 Not Found response with more details in development mode
+        // Wysyłanie odpowiedzi 404 Not Found z większą ilością szczegółów w trybie deweloperskim
         if (isDevelopment) {
             res.status(404).json({
                 status: 404,
@@ -19,10 +19,15 @@ const errorHandler = (err, req, res, next) => {
                 method: req.method
             });
         } else {
-            res.status(404).send('Not Found');
+            res.status(404).render('public/errors/404', {
+                message: 'Nie znaleziono strony',
+                error: err.message,
+                path: req.path,
+                method: req.method
+            });
         }
     } else {
-        // Handle other errors (e.g., 500 Internal Server Error)
+        // Obsługa innych błędów (np. 500 Internal Server Error)
         if (isDevelopment) {
             res.status(500).json({
                 status: 500,
@@ -38,14 +43,14 @@ const errorHandler = (err, req, res, next) => {
     }
 };
 
-// Middleware to handle 404 errors
+// Middleware do obsługi błędów 404
 const handle404 = (req, res, next) => {
     const err = new Error('Not Found');
     err.status = 404;
     next(err);
 };
 
-// Combine both middlewares into one function
+// Połączenie obu middleware'ów w jedną funkcję
 const combinedErrorHandler = (req, res, next) => {
     handle404(req, res, (err) => {
         if (err) {

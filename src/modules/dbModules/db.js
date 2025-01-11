@@ -1,6 +1,6 @@
 const pgp = require('pg-promise')();
 
-// Database setup
+// Ustawienia bazy
 const db = pgp({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -9,7 +9,7 @@ const db = pgp({
     password: process.env.DB_PASSWORD,
 });
 
-// Test setup
+// Test ustawień
 db.connect()
     .then((obj) => {
         obj.done();

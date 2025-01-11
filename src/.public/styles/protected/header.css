@@ -7,6 +7,9 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
+/* Stylizacja marki w pasku nawigacyjnym */
+
 .navbar-brand {
     font-size: 1.5rem;
     font-weight: bold;
@@ -25,6 +28,9 @@
     color: #0056b3;
 }
 
+
+/* Stylizacja linków w pasku nawigacyjnym */
+
 .navbar-nav .nav-item .nav-link {
     color: #555;
     font-size: 1rem;
@@ -35,6 +41,9 @@
 .navbar-nav .nav-item .nav-link:hover {
     color: #007bff;
 }
+
+
+/* Stylizacja menu użytkownika */
 
 .user-menu {
     position: relative;
@@ -50,6 +59,9 @@
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+
+/* Stylizacja pozycji w rozwijanym menu */
 
 .dropdown-item {
     padding: 10px 15px;

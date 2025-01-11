@@ -1,0 +1,17 @@
+.error-page {
+    margin-top: 10%;
+}
+
+.error-page h1 {
+    font-size: 6rem;
+    color: #dc3545;
+}
+
+.error-page p {
+    font-size: 1.5rem;
+    color: #555;
+}
+
+.error-page .btn {
+    font-size: 1.2rem;
+}

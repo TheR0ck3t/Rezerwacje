@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../partials/head.ejs'); %>
+        <link rel="stylesheet" href="/styles/public/errors/session-expired.css">
+        <title>Wygaśnięcie sesji</title>
+</head>
+
+<body>
+    <%- include('../../partials/public/header.ejs'); %>
+
+        <main class="container text-center session-expired-page">
+            <h1>Twoja sesja wygasła</h1>
+            <p>Prosimy zalogować się ponownie, aby kontynuować korzystanie z aplikacji.</p>
+            <a href="/auth?view=login" class="btn btn-primary mt-4">Zaloguj się ponownie</a>
+        </main>
+        <footer>
+            <%- include('../../partials/public/footer.ejs'); %>
+        </footer>
+</body>
+
+</html>

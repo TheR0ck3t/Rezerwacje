@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
+    // Funkcja pobierająca pokoje na podstawie filtrów
     async function fetchRooms(filters = {}) {
         const params = new URLSearchParams(filters);
         try {
@@ -22,12 +23,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             roomsContainer.innerHTML = '';
             if (rooms.length === 0) {
+                // Wyświetlanie komunikatu, gdy brak dostępnych pokoi
                 roomsContainer.innerHTML = `
                     <div class="col-12 text-center">
                         <p class="text-muted">Brak dostępnych pokoi spełniających kryteria wyszukiwania.</p>
                     </div>
                 `;
             } else {
+                // Wyświetlanie dostępnych pokoi
                 rooms.forEach((room) => {
                     const roomCard = document.createElement('div');
                     roomCard.className = 'col-md-4 mb-4';
@@ -61,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error('Error fetching rooms:', error);
+            // Wyświetlanie komunikatu o błędzie
             roomsContainer.innerHTML = `
                 <div class="col-12 text-center">
                     <p class="text-danger">Nie udało się załadować listy pokoi. Spróbuj ponownie później.</p>
@@ -69,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Obsługa wysyłania formularza filtrów
     filterForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -89,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             max_price: maxPrice,
         };
 
+        // Pobieranie pokoi na podstawie filtrów
         fetchRooms(filters);
     });
 });

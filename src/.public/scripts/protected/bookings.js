@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 // Funkcja szczegółów rezerwacji
 function viewReservation(reservationId) {
     alert(`Wyświetl szczegóły rezerwacji: ${reservationId}`);
-    // Można przekierować do strony szczegółów
+    // Można przekierować do strony szczegółów jeżeli istnieje
 }
 
 // Funkcja anulowania rezerwacji

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Attach the register form submit handler
+    // Podłącz obsługę formularza rejestracji
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', async(e) => {
@@ -8,12 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('passwordRegister').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
+            // Sprawdzenie, czy hasła się zgadzają
             if (password !== confirmPassword) {
-                alert('Passwords do not match');
+                alert('Hasła nie są zgodne');
                 return;
             }
 
             try {
+                // Wysłanie żądania rejestracji
                 const response = await axios.post('auth/register', {
                     email,
                     password
@@ -25,20 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const data = response.data;
 
+                // Sprawdzenie odpowiedzi serwera
                 if (response.status === 200) {
-                    window.location.href = '/register-success';
+                    window.location.href = '/register-success'; // Przekierowanie na stronę sukcesu rejestracji
                 } else {
-                    alert(data.error || 'Failed to register. Please try again later');
+                    alert(data.error || 'Rejestracja nie powiodła się. Spróbuj ponownie później');
                 }
             } catch (error) {
                 console.error(error);
-                alert('Failed to register. Please try again later');
+                alert('Rejestracja nie powiodła się. Spróbuj ponownie później');
             }
         });
 
         registerForm.addEventListener('reset', (e) => {
-            console.log('Register form cancelled');
-            window.location.href = '/'; // Redirect to home page
+            console.log('Formularz rejestracji został anulowany');
+            window.location.href = '/'; // Przekierowanie na stronę główną
         });
     }
 });
