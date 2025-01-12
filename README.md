@@ -19,7 +19,7 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 ## Instalacja
 1. Sklonuj repozytorium na swój lokalny komputer:
     ```sh
-    git clone https://github.com/TwojeUzytkownik/Rezerwacje.git
+    git clone https://github.com/The_R0ck3t/Rezerwacje.git
     ```
 2. Przejdź do katalogu projektu:
     ```sh
