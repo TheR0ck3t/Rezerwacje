@@ -19,9 +19,12 @@ document.addEventListener('DOMContentLoaded', async() => {
                 row.innerHTML = `
                     <th scope="row">${index + 1}</th>
                     <td>${reservation.room_name || 'Nieznany pokój'}</td>
-                    <td>${new Date(reservation.start_time).toLocaleString()}</td>
-                    <td>${new Date(reservation.end_time).toLocaleString()}</td>
-                    <td>${reservation.status}</td>
+                    <td><div class="date-time">${new Date(reservation.start_time).toLocaleDateString()}<br>${new Date(reservation.start_time).toLocaleTimeString()}</div></td>
+                    <td><div class="date-time">${new Date(reservation.end_time).toLocaleDateString()}<br>${new Date(reservation.end_time).toLocaleTimeString()}</div></td>
+                    <td>
+                        <span class="status-text">${reservation.status}</span>
+                        ${getStatusIcon(reservation.status)}
+                    </td>
                     <td>
                         <button class="btn btn-primary" onclick="viewReservation(${reservation.id})">Szczegóły</button>
                         <button class="btn btn-danger" onclick="cancelReservation(${reservation.id})">Anuluj</button>
@@ -57,5 +60,19 @@ async function cancelReservation(reservationId) {
             console.error('Error cancelling reservation:', error);
             alert('Nie udało się anulować rezerwacji.');
         }
+    }
+}
+
+// Funkcja zamiany statusu na ikonę
+function getStatusIcon(status) {
+    switch (status) {
+        case 'confirmed':
+            return '<i class="fas fa-check-circle status-icon text-success"></i>';
+        case 'pending':
+            return '<i class="fas fa-hourglass-half status-icon text-warning"></i>';
+        case 'cancelled':
+            return '<i class="fas fa-times-circle status-icon text-danger"></i>';
+        default:
+            return '<i class="fas fa-question-circle status-icon text-muted"></i>';
     }
 }

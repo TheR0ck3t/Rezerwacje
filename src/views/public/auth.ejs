@@ -20,54 +20,56 @@
             <div class="container" id="container">
                 <!-- Formularz rejestracji -->
                 <div class="form-container register">
-                    <form id="registerForm">
+                    <form id="registerForm" class="text-center">
                         <h1>Utwórz konto</h1>
-                        <div class="social-icons">
-                            <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-linkedin"></i></a>
+                        <div class="social-icons d-flex justify-content-center mb-3">
+                            <a href="#" class="icon mx-2"><i class="fa-brands fa-google"></i></a>
+                            <a href="#" class="icon mx-2"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon mx-2"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon mx-2"><i class="fa-brands fa-linkedin"></i></a>
                         </div>
                         <span>lub użyj swojego e-maila do rejestracji</span>
-                        <input type="email" id="emailRegister" name="email" placeholder="Email" required>
-                        <input type="password" id="passwordRegister" name="password" placeholder="Hasło" required>
-                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Potwierdź hasło" required>
-                        <button type="submit" class="btn btn-primary">Zarejestruj się</button>
-                        <button type="reset" class="btn btn-secondary">Anuluj</button>
+                        <input type="email" id="emailRegister" name="email" placeholder="Email" class="form-control my-2" required>
+                        <input type="password" id="passwordRegister" name="password" placeholder="Hasło" class="form-control my-2" required>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Potwierdź hasło" class="form-control my-2" required>
+                        <button type="submit" class="btn btn-primary my-2">Zarejestruj się</button>
+                        <button type="reset" class="btn btn-secondary my-2">Anuluj</button>
+                        <button type="button" class="btn btn-secondary my-2 d-md-none" id="login">Masz już konto? Zaloguj się</button>
                     </form>
                 </div>
 
                 <!-- Formularz logowania -->
                 <div class="form-container login">
-                    <form id="loginForm">
+                    <form id="loginForm" class="text-center">
                         <h1>Zaloguj się</h1>
-                        <div class="social-icons">
-                            <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-linkedin"></i></a>
+                        <div class="social-icons d-flex justify-content-center mb-3">
+                            <a href="#" class="icon mx-2"><i class="fa-brands fa-google"></i></a>
+                            <a href="#" class="icon mx-2"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon mx-2"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon mx-2"><i class="fa-brands fa-linkedin"></i></a>
                         </div>
                         <span>lub użyj swojego e-maila i hasła</span>
-                        <input type="email" id="emailLogin" name="email" placeholder="Email" required>
-                        <input type="password" id="passwordLogin" name="password" placeholder="Hasło" required>
-                        <a href="/password-recovery">Zapomniałeś hasła?</a>
-                        <button type="submit" class="btn btn-primary">Zaloguj się</button>
-                        <button type="reset" class="btn btn-secondary">Anuluj</button>
+                        <input type="email" id="emailLogin" name="email" placeholder="Email" class="form-control my-2" required>
+                        <input type="password" id="passwordLogin" name="password" placeholder="Hasło" class="form-control my-2" required>
+                        <a href="/password-recovery" class="d-block my-2">Zapomniałeś hasła?</a>
+                        <button type="submit" class="btn btn-primary my-2">Zaloguj się</button>
+                        <button type="reset" class="btn btn-secondary my-2">Anuluj</button>
+                        <button type="button" class="btn btn-secondary my-2 d-md-none" id="register">Nie masz konta? Zarejestruj się</button>
                     </form>
                 </div>
 
                 <!-- Sekcja przełączania -->
                 <div class="toggle-container">
                     <div class="toggle">
-                        <div class="toggle-panel toggle-left">
+                        <div class="toggle-panel toggle-left text-center">
                             <h1>Witamy ponownie!</h1>
                             <p>Wprowadź swoje dane osobowe, aby korzystać ze wszystkich funkcji strony</p>
-                            <button class="hidden" id="login">Zaloguj się</button>
+                            <button class="hidden" id="toggle-login">Zaloguj się</button>
                         </div>
-                        <div class="toggle-panel toggle-right">
+                        <div class="toggle-panel toggle-right text-center">
                             <h1>Nie posiadasz jeszcze konta?</h1>
                             <p>Zarejestruj się, aby korzystać ze wszystkich funkcji strony</p>
-                            <button class="hidden" id="register">Zarejestruj się</button>
+                            <button class="hidden" id="toggle-register">Zarejestruj się</button>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,3 @@
-/* Nagłówek dla niezalogowanych użytkowników */
-
-
 /* Stylizacja paska nawigacyjnego */
 
 .navbar {
@@ -14,16 +11,6 @@
 /* Stylizacja marki w pasku nawigacyjnym */
 
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #007bff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-}
-
-.navbar-brand i {
-    margin-right: 10px;
     font-size: 1.5rem;
 }
 
@@ -49,14 +36,25 @@
 /* Stylizacja linków w pasku nawigacyjnym */
 
 .navbar-nav .nav-item .nav-link {
-    color: #555;
+    color: #007bff;
+    /* Zmiana koloru tekstu */
     font-size: 1rem;
-    margin-right: 15px;
-    transition: color 0.3s ease;
+    font-weight: 600;
+    /* Zwiększenie grubości czcionki */
+    margin-right: 0.9375rem;
+    /* 15px = 0.9375rem */
+    padding: 0.625rem 0.9375rem;
+    /* 10px 15px = 0.625rem 0.9375rem */
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 0.3125rem;
+    /* 5px = 0.3125rem */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    /* Dodanie cienia do tekstu */
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-    color: #007bff;
+    color: #fff;
+    background-color: #007bff;
 }
 
 
@@ -64,8 +62,10 @@
 
 .auth-buttons .btn {
     font-size: 1rem;
-    padding: 10px 20px;
-    margin-left: 10px;
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px = 0.625rem 1.25rem */
+    margin-left: 0.625rem;
+    /* 10px = 0.625rem */
 }
 
 .auth-buttons .btn-outline-primary {
@@ -88,4 +88,27 @@
 .auth-buttons .btn-primary:hover {
     background-color: #0056b3;
     border-color: #004080;
+}
+
+
+/* Responsywność */
+
+@media (max-width: 48rem) {
+    /* 768px = 48rem */
+    .navbar-nav .nav-item .nav-link {
+        font-size: 1.25rem;
+        margin-right: 0;
+        margin-bottom: 0.625rem;
+        /* 10px = 0.625rem */
+        padding: 0.9375rem 1.25rem;
+        /* 15px 20px = 0.9375rem 1.25rem */
+    }
+    .auth-buttons .btn {
+        font-size: 1.25rem;
+        padding: 0.9375rem 1.5625rem;
+        /* 15px 25px = 0.9375rem 1.5625rem */
+        margin-left: 0;
+        margin-bottom: 0.625rem;
+        /* 10px = 0.625rem */
+    }
 }

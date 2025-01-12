@@ -1,34 +1,49 @@
 /* Footer */
 
-.footer {
-    background-color: #f8f9fa;
-    color: #343a40;
-    padding: 20px 0;
-    border-top: 1px solid #e9ecef;
-}
-
 .footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 75%;
+    /* 1200px = 75rem */
+    margin: 1rem auto 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0 1.25rem;
+    /* 20px = 1.25rem */
+    flex-wrap: wrap;
+    /* Dodanie flex-wrap dla RWD */
+    background-color: #f8f9fa;
+    color: #343a40;
+    /* Zwiększenie paddingu */
+    border-top: 1px solid #e9ecef;
+    /* Dodanie odstępu między footerem a sekcją CTA */
 }
 
 .footer-left {
-    font-size: 14px;
+    font-size: 0.875rem;
+    /* 14px = 0.875rem */
+    /* 20px = 1.25rem */
+    text-align: center;
+    /* Wyśrodkowanie tekstu w trybie mobilnym */
 }
 
 .footer-right {
     display: flex;
-    gap: 15px;
+    gap: 0.9375rem;
+    /* 15px = 0.9375rem */
+    flex-wrap: wrap;
+    /* Dodanie flex-wrap dla RWD */
+    justify-content: center;
+    /* Wyśrodkowanie elementów w trybie mobilnym */
 }
+
+
+/* Stylizacja linków w stopce */
 
 .footer-link {
     text-decoration: none;
     color: #007bff;
-    font-size: 14px;
+    font-size: 0.875rem;
+    /* 14px = 0.875rem */
     transition: color 0.3s ease;
 }
 
@@ -37,5 +52,36 @@
 }
 
 .footer-link i {
-    margin-right: 5px;
+    margin-right: 0.3125rem;
+    /* 5px = 0.3125rem */
+}
+
+
+/* Responsywność */
+
+@media (max-width: 48rem) {
+    /* 768px = 48rem */
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+    .footer-left {
+        text-align: center;
+        margin-bottom: 0.625rem;
+        /* 10px = 0.625rem */
+        /* Zmniejszenie marginesu dolnego w trybie mobilnym */
+    }
+    .footer-right {
+        justify-content: center;
+        gap: 0.625rem;
+        /* 10px = 0.625rem */
+        /* Zmniejszenie odstępów między linkami w trybie mobilnym */
+    }
+    .footer-link {
+        font-size: 1rem;
+        /* 16px = 1rem */
+        /* Zwiększenie rozmiaru czcionki w trybie mobilnym */
+    }
 }

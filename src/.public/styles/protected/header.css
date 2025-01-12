@@ -32,14 +32,19 @@
 /* Stylizacja linków w pasku nawigacyjnym */
 
 .navbar-nav .nav-item .nav-link {
-    color: #555;
+    color: #007bff;
     font-size: 1rem;
-    margin-right: 15px;
-    transition: color 0.3s ease;
+    font-weight: 600;
+    margin-right: 0.9375rem;
+    padding: 0.625rem 0.9375rem;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 0.3125rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-    color: #007bff;
+    color: #fff;
+    background-color: #007bff;
 }
 
 
@@ -79,4 +84,67 @@
 
 .dropdown-item.text-danger:hover {
     background-color: #f8d7da;
+}
+
+
+/* Stylizacja przycisku rozwijania menu */
+
+.navbar-toggler {
+    border: none;
+    color: #007bff;
+    font-size: 1.25rem;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+
+/* Stylizacja przycisków logowania i rejestracji */
+
+.auth-buttons .btn {
+    font-size: 1rem;
+    padding: 0.625rem 1.25rem;
+    margin-left: 0.625rem;
+}
+
+.auth-buttons .btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.auth-buttons .btn-outline-primary:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.auth-buttons .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.auth-buttons .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004080;
+}
+
+
+/* Responsywność */
+
+@media (max-width: 48rem) {
+    .navbar-nav .nav-item .nav-link {
+        font-size: 1.25rem;
+        margin-right: 0;
+        margin-bottom: 0.625rem;
+        padding: 0.9375rem 1.25rem;
+    }
+    .auth-buttons .btn {
+        font-size: 1.25rem;
+        padding: 0.9375rem 1.5625rem;
+        margin-left: 0;
+        margin-bottom: 0.625rem;
+    }
 }

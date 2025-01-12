@@ -55,7 +55,6 @@ body {
 
 .container a {
     color: #007BFF;
-    /* Zmieniono kolor na niebieski */
     font-size: 13px;
     text-decoration: none;
     margin: 15px 0 10px;
@@ -66,7 +65,6 @@ body {
 
 .container button {
     background-color: #007BFF;
-    /* Zmieniono kolor na niebieski */
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -212,10 +210,8 @@ body {
 
 .toggle {
     background-color: #007BFF;
-    /* Zmieniono kolor na niebieski */
     height: 100%;
     background: linear-gradient(to right, #007BFF, #0056b3);
-    /* Zmieniono gradient */
     color: #fff;
     position: relative;
     left: -100%;
@@ -270,21 +266,67 @@ body {
 input[type="email"],
 input[type="password"] {
     outline: 1px solid #ccc;
-    /* Cienki outline */
     padding: 10px;
-    /* Dodaj padding dla lepszego wyglądu */
     border-radius: 4px;
-    /* Zaokrąglone rogi */
     border: 1px solid #ddd;
-    /* Dodaj cienką ramkę */
     transition: outline 0.3s ease-in-out;
-    /* Płynne przejście */
 }
 
 input[type="email"]:focus,
 input[type="password"]:focus {
     outline: 1px solid #007BFF;
-    /* Zmiana koloru outline na niebieski przy focus */
     border-color: #007BFF;
-    /* Zmiana koloru ramki na niebieski przy focus */
+}
+
+
+/* Responsywność */
+
+@media (max-width: 768px) {
+    main {
+        height: auto !important;
+        width: 100% !important;
+    }
+    .container {
+        width: 100% !important;
+        min-height: 100vh !important;
+        height: auto !important;
+    }
+    .form-container {
+        width: 100% !important;
+        position: absolute;
+        top: 0;
+        height: 100% !important;
+        transition: all 0.6s ease-in-out;
+    }
+    .login,
+    .register {
+        width: 100% !important;
+        left: 0 !important;
+        transform: translateX(0) !important;
+    }
+    .login:hover,
+    .register:hover {
+        color: #ffffff !important;
+        text-decoration: none !important;
+    }
+    .container.active .login {
+        transform: translateX(100%) !important;
+    }
+    .container.active .register {
+        transform: translateX(0) !important;
+        opacity: 1 !important;
+        z-index: 5 !important;
+        animation: move 0.6s !important;
+    }
+    .toggle-container {
+        display: none !important;
+    }
+    .toggle-panel {
+        width: 100% !important;
+        position: relative !important;
+        transform: translateX(0) !important;
+    }
+    .toggle {
+        display: none !important;
+    }
 }

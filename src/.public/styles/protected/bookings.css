@@ -47,6 +47,8 @@
     text-align: center;
     vertical-align: middle;
     padding: 10px;
+    white-space: nowrap;
+    /* Zapobiega łamaniu tekstu */
 }
 
 .table thead th {
@@ -62,6 +64,8 @@
     display: flex;
     justify-content: center;
     gap: 10px;
+    flex-wrap: wrap;
+    /* Pozwala na zawijanie przycisków */
 }
 
 
@@ -90,4 +94,122 @@
 
 .btn-danger:hover {
     background-color: #bd2130;
+}
+
+
+/* Stylizacja ikon statusu */
+
+.status-icon {
+    font-size: 1.25rem;
+    display: none;
+    /* Domyślnie ukryte */
+}
+
+
+/* Stylizacja tekstu statusu */
+
+.status-text {
+    display: inline;
+    /* Domyślnie widoczne */
+}
+
+
+/* Szerokość kolumny ze statusem */
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+    width: 100px;
+    /* Ustaw szerokość kolumny na 100px */
+}
+
+
+/* Responsywność */
+
+@media (max-width: 768px) {
+    .my-bookings-page {
+        padding: 10px;
+    }
+    .table th,
+    .table td {
+        padding: 5px;
+        font-size: 0.875rem;
+    }
+    .table thead th {
+        font-size: 1rem;
+    }
+    .table tbody tr td:last-child {
+        flex-direction: column;
+        gap: 5px;
+    }
+    #noBookingsPlaceholder h3 {
+        font-size: 1.25rem;
+    }
+    #noBookingsPlaceholder p {
+        font-size: 0.875rem;
+    }
+    #noBookingsPlaceholder .btn {
+        padding: 8px 16px;
+        font-size: 0.875rem;
+    }
+    /* Ukryj tekst statusu i pokaż ikony na urządzeniach mobilnych */
+    .status-text {
+        display: none;
+    }
+    .status-icon {
+        display: inline;
+    }
+}
+
+
+/* Dodatkowe dostosowanie dla bardzo małych ekranów */
+
+@media (max-width: 576px) {
+    .table th,
+    .table td {
+        font-size: 0.75rem;
+        padding: 3px;
+        /* Zmniejszenie paddingu */
+    }
+    .table thead th {
+        font-size: 0.875rem;
+    }
+    .table tbody tr td:last-child {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .table tbody tr td {
+        white-space: normal;
+        /* Pozwala na łamanie tekstu */
+    }
+    .table tbody tr td:nth-child(1),
+    .table tbody tr td:nth-child(2),
+    .table tbody tr td:nth-child(3),
+    .table tbody tr td:nth-child(4),
+    .table tbody tr td:nth-child(5),
+    .table tbody tr td:nth-child(6) {
+        min-width: 80px;
+        /* Minimalna szerokość komórek */
+    }
+    /* Stylizacja nagłówków tabeli dla mobilek */
+    .table thead th:nth-child(3),
+    .table thead th:nth-child(4) {
+        white-space: normal;
+        /* Pozwala na łamanie tekstu */
+    }
+    /* Stylizacja dat i godzin w komórkach tabeli dla mobilek */
+    .table tbody tr td:nth-child(3) .date-time,
+    .table tbody tr td:nth-child(4) .date-time {
+        display: flex;
+        flex-direction: column;
+    }
+    #noBookingsPlaceholder h3 {
+        font-size: 1rem;
+    }
+    #noBookingsPlaceholder p {
+        font-size: 0.75rem;
+    }
+    #noBookingsPlaceholder .btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
 }
