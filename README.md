@@ -31,7 +31,7 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
     ```
 
 ## Konfiguracja
-1. Utwórz plik [.env](http://_vscodecontentref_/2) w katalogu głównym projektu i dodaj następujące zmienne środowiskowe:
+1. Utwórz plik [.env](https://www.npmjs.com/package/dotenv) w katalogu głównym projektu i dodaj następujące zmienne środowiskowe:
     ```env
     # App config
     PORT=3000 # Port, na którym będzie działał serwer
@@ -57,6 +57,7 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
     FRONTEND_URL=http://localhost:3000 # URL aplikacji frontendowej
     SUPPORT_EMAIL=support@example.com # Adres e-mail wsparcia
     ```
+    ### Konfiguracja maila może różnić się w zależności od dostawycy usługi, system testowany był za pomocą [MailerSend](https://www.mailersend.com/)
 
 ## Uruchomienie
 1. Uruchom serwer aplikacji:
@@ -66,13 +67,13 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 2. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
 
 ## Struktura projektu
-- [src](http://_vscodecontentref_/3) - Główny katalog źródłowy projektu
+- [src](https://github.com/TheR0ck3t/Rezerwacje/tree/main/src) - Główny katalog źródłowy projektu
   - `controllers/` - Kontrolery aplikacji
   - `modules/` - Middleware, error handler oraz moduł szyfrowania
   - `routes/` - Definicje tras
   - `views/` - Szablony widoków
   - `.public/` - Pliki statyczne (CSS, JS, obrazy)
-- [README.md](http://_vscodecontentref_/4) - Dokumentacja projektu
+- [README.md](https://github.com/TheR0ck3t/Rezerwacje/blob/main/README.md) - Dokumentacja projektu
 
 ## Technologie
 - Node.js
@@ -93,6 +94,3 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 - nodemon
 - otpauth
 - qrcode
-
-## Licencja
-Projekt jest dostępny na licencji MIT. Zobacz plik `LICENSE` po więcej informacji.
