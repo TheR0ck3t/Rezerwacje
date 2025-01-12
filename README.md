@@ -68,7 +68,7 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 
 ## Struktura projektu
 - [src](https://github.com/TheR0ck3t/Rezerwacje/tree/main/src) - Główny katalog źródłowy projektu
-  - `.public/` - liki statyczne (CSS, JS, obrazy)
+  - `.public/` - Pliki statyczne (CSS, JS, obrazy)
   - `modules/` - Middleware, error handler oraz moduł szyfrowania
   - `routes/` - Definicje tras
   - `services/` - Mailing
@@ -94,6 +94,3 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 - nodemon
 - otpauth
 - qrcode
-
-## Licencja
-Projekt jest dostępny na licencji MIT. Zobacz plik `LICENSE` po więcej informacji.
