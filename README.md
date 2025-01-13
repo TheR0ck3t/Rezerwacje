@@ -68,7 +68,6 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 
 Aplikacja najpierw sprawdzi swoje połączenie z serwerem bazy danych, a następnie sprawdzi, czy baza danych istnieje. Jeśli baza danych nie istnieje, aplikacja utworzy nową bazę danych o nazwie określonej w konfiguracji (`dbConfig.database`).
 3. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
-   ```
 
 ## Dodawanie własnych danych dotyczących pokojów
 1. Aby dodać własne dane dotyczące pokojów do bazy danych, możesz użyć poniższego przykładowego zapytania SQL. Struktura JSON dla danych dotyczących pokojów powinna wyglądać następująco:
