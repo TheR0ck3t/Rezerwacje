@@ -59,18 +59,14 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
     ```
     ### Konfiguracja maila może różnić się w zależności od dostawycy usługi, system testowany był za pomocą [MailerSend](https://www.mailersend.com/)
 
-## Uruchomienie
+## Uruchomienie i wgrywanie testowych danych
 1. Uruchom serwer aplikacji:
     ```sh
     npm start
     ```
-2. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
-
-## Wgrywanie testowych danych
-1. Aby wgrać testowe dane do tabeli `rooms`, uruchom następujące polecenie:
-    ```sh
-    npx knex seed:run --specific=demo_data.js
-    ```
+2. Podczas uruchamiania serwera aplikacji, zostaniesz zapytany, czy chcesz wgrać testowe dane do bazy danych. Odpowiedz `Y`, aby wgrać testowe dane, lub `N`, aby pominąć ten krok.
+3. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
+   ```
 
 ## Dodawanie własnych danych dotyczących pokojów
 1. Aby dodać własne dane dotyczące pokojów do bazy danych, możesz użyć poniższego przykładowego zapytania SQL. Struktura JSON dla danych dotyczących pokojów powinna wyglądać następująco:

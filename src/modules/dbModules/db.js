@@ -5,13 +5,15 @@ const knexConfig = require('../../../knexfile');
 const initSchema = require('../../../migrations/20250113013348_init_schema');
 const seedData = require('../../../seeds/demo_data'); // Import seeda (jeśli jest)
 
-const db = pgp({
+const dbConfig = {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-});
+};
+
+const db = pgp(dbConfig);
 
 db.connect()
     .then((obj) => {
@@ -23,7 +25,35 @@ db.connect()
         console.log('Database connection failed:', error.message || error);
     });
 
+
+async function createDatabaseIfNotExists() {
+    const defaultDb = pgp({
+        host: dbConfig.host,
+        port: dbConfig.port,
+        database: dbConfig.database, // Domyślna baza danych PostgreSQL
+        user: dbConfig.user,
+        password: dbConfig.password,
+    });
+
+    try {
+        const result = await defaultDb.oneOrNone(`SELECT 1 FROM pg_database WHERE datname = $1`, [dbConfig.database]);
+        if (!result) {
+            await defaultDb.none(`CREATE DATABASE $1:name`, [dbConfig.database]);
+            console.log(`Database ${dbConfig.database} created successfully.`);
+        } else {
+            console.log(`Database ${dbConfig.database} already exists.`);
+        }
+    } catch (error) {
+        console.error('Error checking or creating database:', error);
+    } finally {
+        defaultDb.$pool.end(); // Zamknięcie połączenia
+    }
+}
+
+
 async function checkAndInitializeSchema() {
+    await createDatabaseIfNotExists(); // Sprawdzenie i utworzenie bazy danych, jeśli nie istnieje
+
     const knexInstance = knex(knexConfig.development);
 
     console.log('Checking database schema...');
