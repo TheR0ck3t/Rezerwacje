@@ -15,45 +15,54 @@ const dbConfig = {
 
 const db = pgp(dbConfig);
 
-db.connect()
-    .then((obj) => {
-        obj.done();
-        console.log('Connected to the database: ' + db.$cn.database + ' on ' + db.$cn.host + ':' + db.$cn.port);
-        checkAndInitializeSchema();
-    })
-    .catch((error) => {
-        console.log('Database connection failed:', error.message || error);
-    });
+// Tworzenie instancji połączenia do serwera bazy danych
+const serverDb = pgp({
+    host: dbConfig.host,
+    port: dbConfig.port,
+    user: dbConfig.user,
+    password: dbConfig.password
+});
 
-
-async function createDatabaseIfNotExists() {
-    const defaultDb = pgp({
-        host: dbConfig.host,
-        port: dbConfig.port,
-        database: dbConfig.database, // Domyślna baza danych PostgreSQL
-        user: dbConfig.user,
-        password: dbConfig.password,
-    });
-
+// Funkcja sprawdzająca połączenie z serwerem
+async function checkServerConnection() {
     try {
-        const result = await defaultDb.oneOrNone(`SELECT 1 FROM pg_database WHERE datname = $1`, [dbConfig.database]);
-        if (!result) {
-            await defaultDb.none(`CREATE DATABASE $1:name`, [dbConfig.database]);
-            console.log(`Database ${dbConfig.database} created successfully.`);
-        } else {
-            console.log(`Database ${dbConfig.database} already exists.`);
-        }
+        await serverDb.connect();
+        console.log('Connected to the database server: ' + dbConfig.host + ':' + dbConfig.port);
     } catch (error) {
-        console.error('Error checking or creating database:', error);
-    } finally {
-        defaultDb.$pool.end(); // Zamknięcie połączenia
+        console.log('Database server connection failed:', error.message || error);
+        process.exit(1); // Zakończenie procesu w przypadku błędu połączenia z serwerem
     }
 }
 
+// Funkcja sprawdzająca, czy istnieje baza danych
+async function checkDatabaseExists() {
+    try {
+        const result = await serverDb.oneOrNone('SELECT 1 FROM pg_database WHERE datname = $1', [dbConfig.database]);
+        if (!result) {
+            console.log('Database does not exist:', dbConfig.database);
+            await createDatabase(); // Utworzenie bazy danych, jeśli nie istnieje
+        } else {
+            console.log('Database exists:', dbConfig.database);
+        }
+    } catch (error) {
+        console.log('Error checking database existence:', error.message || error);
+        process.exit(1); // Zakończenie procesu w przypadku błędu sprawdzania bazy danych
+    }
+}
 
+// Funkcja tworząca bazę danych
+async function createDatabase() {
+    try {
+        await serverDb.none(`CREATE DATABASE ${dbConfig.database}`);
+        console.log('Database created:', dbConfig.database);
+    } catch (error) {
+        console.log('Error creating database:', error.message || error);
+        process.exit(1); // Zakończenie procesu w przypadku błędu tworzenia bazy danych
+    }
+}
+
+// Funkcja inicjalizująca schemat bazy danych
 async function checkAndInitializeSchema() {
-    await createDatabaseIfNotExists(); // Sprawdzenie i utworzenie bazy danych, jeśli nie istnieje
-
     const knexInstance = knex(knexConfig.development);
 
     console.log('Checking database schema...');
@@ -76,6 +85,7 @@ async function checkAndInitializeSchema() {
     }
 }
 
+// Funkcja pytająca o wgranie danych testowych
 function askToSeed(knexInstance) {
     const rl = readline.createInterface({
         input: process.stdin,
@@ -99,5 +109,20 @@ function askToSeed(knexInstance) {
         knexInstance.destroy(); // Zamknięcie połączenia Knex
     });
 }
+
+// Sprawdzanie połączenia z serwerem i istnienia bazy danych
+(async() => {
+    await checkServerConnection();
+    await checkDatabaseExists();
+    db.connect()
+        .then((obj) => {
+            obj.done();
+            console.log('Connected to the database: ' + db.$cn.database + ' on ' + db.$cn.host + ':' + db.$cn.port);
+            checkAndInitializeSchema();
+        })
+        .catch((error) => {
+            console.log('Database connection failed:', error.message || error);
+        });
+})();
 
 module.exports = db;
