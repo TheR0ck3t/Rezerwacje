@@ -76,7 +76,7 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 1. Aby dodać własne dane dotyczące pokojów do bazy danych, możesz użyć poniższego przykładowego zapytania SQL. Struktura JSON dla danych dotyczących pokojów powinna wyglądać następująco:
     ```sql
     INSERT INTO rooms (capacity, details, price_per_1h) VALUES (
-        50 -- Pojemność sali,
+        50, -- Pojemność sali,
     '{
         "name": "Sala Konferencyjna 1",         -- Nazwa sali
         "images": [                             -- Zdjęcia przedstawiające dane miejsce
