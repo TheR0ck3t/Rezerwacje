@@ -76,7 +76,6 @@ async function checkAndInitializeSchema() {
             askToSeed(knexInstance); // Pytanie o wgranie danych testowych
         } else {
             console.log('Schema already exists. Skipping initialization.');
-            askToSeed(knexInstance); // Pytanie o wgranie danych testowych mimo istniejącej bazy
         }
     } catch (error) {
         console.error('Error checking or initializing schema:', error);
@@ -84,6 +83,7 @@ async function checkAndInitializeSchema() {
         // Nie niszcz instancji tutaj, bo może być potrzebna do wgrywania seedów
     }
 }
+
 
 // Funkcja pytająca o wgranie danych testowych
 function askToSeed(knexInstance) {
