@@ -7,8 +7,8 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 - Rejestracja i logowanie użytkowników
 - Przeglądanie dostępnych sal konferencyjnych
 - Tworzenie, edytowanie i anulowanie rezerwacji
-- Przeglądanie szczegółów rezerwacji
-- Powiadomienia o statusie rezerwacji
+- Przeglądanie szczegółów rezerwacji [WIP]
+- Powiadomienia o statusie rezerwacji [WIP 25%]
 - Responsywny interfejs użytkownika
 
 ## Wymagania systemowe
