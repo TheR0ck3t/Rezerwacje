@@ -66,6 +66,42 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
     ```
 2. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
 
+## Wgrywanie testowych danych
+1. Aby wgrać testowe dane do tabeli `rooms`, uruchom następujące polecenie:
+    ```sh
+    npx knex seed:run --specific=demo_data.js
+    ```
+
+## Dodawanie własnych danych dotyczących pokojów
+1. Aby dodać własne dane dotyczące pokojów do bazy danych, możesz użyć poniższego przykładowego zapytania SQL. Struktura JSON dla danych dotyczących pokojów powinna wyglądać następująco:
+    ```sql
+    INSERT INTO rooms (capacity, details, price_per_1h) VALUES (
+        50 -- Pojemność sali,
+    '{
+        "name": "Sala Konferencyjna 1",         -- Nazwa sali
+        "images": [                             -- Zdjęcia przedstawiające dane miejsce
+            "/res/rooms/1/image1.jpg", 
+            "/res/rooms/1/image2.jpg"
+        ],
+        "location": "Warszawa, ul. Przykładowa 10", -- Lokalizacja
+        "description": "Elegancka sala konferencyjna wyposażona w sprzęt multimedialny." -- Opis
+    }',
+    150 -- Cena za godzinę
+    );
+    ```
+2. Struktura folderów ze zdjęciami pokoi powinna wyglądać następująco:
+    ```
+    /res/rooms/
+    ├── 1/
+    │   ├── image1.jpg
+    │   └── image2.jpg
+    ├── 2/
+    │   ├── image1.jpg
+    │   └── image2.jpg
+    └── ...
+    ```
+    Upewnij się, że zdjęcia pokoi są umieszczone w odpowiednich folderach zgodnie z powyższą strukturą.
+
 ## Struktura projektu
 - [src](https://github.com/TheR0ck3t/Rezerwacje/tree/main/src) - Główny katalog źródłowy projektu
   - `.public/` - Pliki statyczne (CSS, JS, obrazy)
@@ -80,6 +116,7 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 - Express
 - PostgreSQL
 - pg-promise
+- Knex.js
 - EJS (Embedded JavaScript)
 - Bootstrap
 - Font Awesome
