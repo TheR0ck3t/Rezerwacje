@@ -1,4 +1,4 @@
-# Rezerwacje
+# [Rezerwacje](https://github.com/TheR0ck3t/Rezerwacje)
 
 ## Opis projektu
 Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwację sal konferencyjnych. Aplikacja pozwala na zarządzanie rezerwacjami, przeglądanie dostępnych sal oraz szczegółów rezerwacji. Projekt został stworzony z wykorzystaniem technologii takich jak Node.js, Express, PostgreSQL oraz Bootstrap.
