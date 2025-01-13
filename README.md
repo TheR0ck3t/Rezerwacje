@@ -64,9 +64,8 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
     ```sh
     npm start
     ```
-2. Podczas uruchamiania serwera aplikacji, zostaniesz zapytany, czy chcesz wgrać testowe dane do bazy danych. Odpowiedz `Y`, aby wgrać testowe dane, lub `N`, aby pominąć ten krok.
+2. Podczas uruchamiania serwera aplikacja najpierw sprawdzi swoje połączenie z serwerem bazy danych, a następnie sprawdzi, czy baza danych istnieje. Jeśli baza danych nie istnieje, aplikacja utworzy nową bazę danych o nazwie określonej w konfiguracji (`dbConfig.database`). Następnie zostaniesz zapytany, czy chcesz wgrać testowe dane do bazy danych. Odpowiedz `Y`, aby wgrać testowe dane, lub `N`, aby pominąć ten krok.
 
-Aplikacja najpierw sprawdzi swoje połączenie z serwerem bazy danych, a następnie sprawdzi, czy baza danych istnieje. Jeśli baza danych nie istnieje, aplikacja utworzy nową bazę danych o nazwie określonej w konfiguracji (`dbConfig.database`).
 3. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
 
 ## Dodawanie własnych danych dotyczących pokojów
