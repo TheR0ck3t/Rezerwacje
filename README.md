@@ -1,4 +1,4 @@
-# Rezerwacje
+# [Rezerwacje](https://github.com/TheR0ck3t/Rezerwacje)
 
 ## Opis projektu
 Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwację sal konferencyjnych. Aplikacja pozwala na zarządzanie rezerwacjami, przeglądanie dostępnych sal oraz szczegółów rezerwacji. Projekt został stworzony z wykorzystaniem technologii takich jak Node.js, Express, PostgreSQL oraz Bootstrap.
@@ -64,17 +64,16 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
     ```sh
     npm start
     ```
-2. Podczas uruchamiania serwera aplikacji, zostaniesz zapytany, czy chcesz wgrać testowe dane do bazy danych. Odpowiedz `Y`, aby wgrać testowe dane, lub `N`, aby pominąć ten krok.
+2. Podczas uruchamiania serwera aplikacja najpierw sprawdzi swoje połączenie z serwerem bazy danych, a następnie sprawdzi, czy baza danych istnieje. Jeśli baza danych nie istnieje, aplikacja utworzy nową bazę danych o nazwie określonej w konfiguracji (`dbConfig.database`). Następnie zostaniesz zapytany, czy chcesz wgrać testowe dane do bazy danych. Odpowiedz `Y`, aby wgrać testowe dane, lub `N`, aby pominąć ten krok.
 
-Aplikacja najpierw sprawdzi swoje połączenie z serwerem bazy danych, a następnie sprawdzi, czy baza danych istnieje. Jeśli baza danych nie istnieje, aplikacja utworzy nową bazę danych o nazwie określonej w konfiguracji (`dbConfig.database`).
 3. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
 
 ## Dodawanie własnych danych dotyczących pokojów
 1. Aby dodać własne dane dotyczące pokojów do bazy danych, możesz użyć poniższego przykładowego zapytania SQL. Struktura JSON dla danych dotyczących pokojów powinna wyglądać następująco:
     ```sql
     INSERT INTO rooms (capacity, details, price_per_1h) VALUES (
-        50 -- Pojemność sali, 
-    '{
+        50 -- Pojemność sali
+    , '{
         "name": "Sala Konferencyjna 1",         -- Nazwa sali
         "images": [                             -- Zdjęcia przedstawiające dane miejsce
             "/res/rooms/1/image1.jpg", 
