@@ -37,8 +37,8 @@ router.put('/info', authToken, async(req, res) => {
     const user = req.user;
     const { firstName, lastName, phoneNumber } = req.body;
     // Walidacja danych
-    if (!firstName || !lastName || !phoneNumber) {
-        return res.status(400).json({ error: 'Missing first name, last name or phone number' });
+    if (!firstName && !lastName && !phoneNumber) {
+        return res.status(400).json({ error: 'At least one of first name, last name, or phone number is required' });
     }
     // Zaktualizowanie danych w bazie danych
     try {

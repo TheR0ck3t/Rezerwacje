@@ -80,7 +80,11 @@ router.post('/create', authToken, async(req, res) => {
         );
 
         // Wysyłanie potwierdzenia rezerwacji
-        await sendReservationConfirmationEmail(req.user.email);
+        if (process.env.MAIL_ENABLED === 'true') {
+            await sendReservationConfirmationEmail(req.user.email);
+        } else {
+            console.log('Reservation confirmation email not sent due to MAIL_ENABLED environment variable set to false');
+        }
         res.json({ message: 'Reservation successful', redirect: '/thank-you' });
     } catch (error) {
         console.error('Error creating reservation:', error);

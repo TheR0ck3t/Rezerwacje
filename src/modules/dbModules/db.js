@@ -1,6 +1,5 @@
 const pgp = require('pg-promise')();
 const knex = require('knex');
-const readline = require('readline'); // Import do obsługi pytania w terminalu
 const knexConfig = require('../../../knexfile');
 const initSchema = require('../../../migrations/20250113013348_init_schema');
 const seedData = require('../../../seeds/demo_data'); // Import seeda (jeśli jest)
@@ -41,8 +40,10 @@ async function checkDatabaseExists() {
         if (!result) {
             console.log('Database does not exist:', dbConfig.database);
             await createDatabase(); // Utworzenie bazy danych, jeśli nie istnieje
+            await checkAndInitializeSchema(true); // Inicjalizacja schematu i wgranie danych testowych
         } else {
             console.log('Database exists:', dbConfig.database);
+            await checkAndInitializeSchema(process.env.LOAD_TEST_DATA === 'true'); // Inicjalizacja schematu i wgranie danych testowych, jeśli zmienna środowiskowa jest ustawiona
         }
     } catch (error) {
         console.log('Error checking database existence:', error.message || error);
@@ -62,7 +63,7 @@ async function createDatabase() {
 }
 
 // Funkcja inicjalizująca schemat bazy danych
-async function checkAndInitializeSchema() {
+async function checkAndInitializeSchema(loadTestData) {
     const knexInstance = knex(knexConfig.development);
 
     console.log('Checking database schema...');
@@ -73,41 +74,31 @@ async function checkAndInitializeSchema() {
             console.log('Schema not found. Initializing schema...');
             await initSchema.up(knexInstance);
             console.log('Schema initialized successfully.');
-            askToSeed(knexInstance); // Pytanie o wgranie danych testowych
+            if (loadTestData) {
+                await loadTestData(knexInstance); // Wgranie danych testowych
+            }
         } else {
             console.log('Schema already exists. Skipping initialization.');
-            askToSeed(knexInstance); // Pytanie o wgranie danych testowych mimo istniejącej bazy
+            if (loadTestData) {
+                await loadTestData(knexInstance); // Wgranie danych testowych, jeśli schemat już istnieje
+            }
         }
     } catch (error) {
         console.error('Error checking or initializing schema:', error);
     } finally {
-        // Nie niszcz instancji tutaj, bo może być potrzebna do wgrywania seedów
+        knexInstance.destroy(); // Zamknięcie połączenia Knex
     }
 }
 
-// Funkcja pytająca o wgranie danych testowych
-function askToSeed(knexInstance) {
-    const rl = readline.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-    });
-
-    rl.question('Do you want to load test data into the database? (Y/N): ', async(answer) => {
-        if (answer.toLowerCase() === 'y') {
-            try {
-                console.log('Loading test data...');
-                await seedData.seed(knexInstance); // Wywołanie seeda
-                console.log('Test data loaded successfully.');
-            } catch (error) {
-                console.error('Error loading test data:', error);
-            }
-        } else {
-            console.log('Skipping test data load.');
-        }
-
-        rl.close();
-        knexInstance.destroy(); // Zamknięcie połączenia Knex
-    });
+// Funkcja wgrywająca dane testowe
+async function loadTestData(knexInstance) {
+    try {
+        console.log('Loading test data...');
+        await seedData.seed(knexInstance); // Wywołanie seeda
+        console.log('Test data loaded successfully.');
+    } catch (error) {
+        console.error('Error loading test data:', error);
+    }
 }
 
 // Sprawdzanie połączenia z serwerem i istnienia bazy danych
@@ -118,7 +109,6 @@ function askToSeed(knexInstance) {
         .then((obj) => {
             obj.done();
             console.log('Connected to the database: ' + db.$cn.database + ' on ' + db.$cn.host + ':' + db.$cn.port);
-            checkAndInitializeSchema();
         })
         .catch((error) => {
             console.log('Database connection failed:', error.message || error);
