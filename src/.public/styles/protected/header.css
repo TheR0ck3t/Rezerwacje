@@ -1,8 +1,8 @@
 /* Nagłówek dla zalogowanych użytkowników */
 
 .navbar {
-    padding: 15px 20px;
     background-color: #f8f9fa;
+    padding: 1rem;
     border-bottom: 1px solid #e9ecef;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -20,11 +20,12 @@
 }
 
 .navbar-brand i {
-    margin-right: 10px;
+    margin-right: 0.5rem;
     font-size: 1.5rem;
 }
 
 .navbar-brand:hover {
+    text-decoration: none;
     color: #0056b3;
 }
 
@@ -32,7 +33,8 @@
 /* Stylizacja linków w pasku nawigacyjnym */
 
 .navbar-nav .nav-item .nav-link {
-    color: #007bff;
+    font-weight: bold;
+    color: #6c757d;
     font-size: 1rem;
     font-weight: 600;
     margin-right: 0.9375rem;
@@ -43,7 +45,7 @@
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-    color: #fff;
+    color: #0056b3;
     background-color: #007bff;
 }
 
@@ -51,10 +53,12 @@
 /* Stylizacja menu użytkownika */
 
 .user-menu {
+    margin-left: auto;
     position: relative;
 }
 
 .user-menu .btn {
+    font-weight: bold;
     font-size: 1rem;
     padding: 10px 20px;
 }
@@ -69,13 +73,14 @@
 /* Stylizacja pozycji w rozwijanym menu */
 
 .dropdown-item {
+    font-weight: bold;
     padding: 10px 15px;
     font-size: 0.9rem;
     transition: background-color 0.3s ease;
 }
 
 .dropdown-item:hover {
-    background-color: #f0f0f0;
+    background-color: #f8f9fa;
 }
 
 .dropdown-item.text-danger {

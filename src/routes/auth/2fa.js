@@ -43,7 +43,7 @@ router.post('/generate', async(req, res) => {
 // Włączanie 2FA
 router.post('/enable', async(req, res) => {
     const { userId, token, secret } = req.body;
-
+    console.log('Received request to enable 2FA for user:', userId);
     try {
         // Pobieranie użytkownika z bazy danych
         const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', [userId]);
@@ -75,11 +75,11 @@ router.post('/enable', async(req, res) => {
 // Wyłączanie 2FA
 router.post('/disable', async(req, res) => {
     const { userId } = req.body;
-
+    console.log('Received request to disable 2FA for user:', userId);
     try {
         // Pobieranie użytkownika z bazy danych
-        const user = await db.query('SELECT * FROM users WHERE id = $1', [userId]);
-
+        const user = await db.oneOrNone('SELECT * FROM users WHERE id = $1', [userId]);
+        console.log('User:', user);
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }

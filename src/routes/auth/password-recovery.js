@@ -21,8 +21,11 @@ router.post('/password-recovery', async(req, res) => {
         );
 
         // Wysyłanie e-maila resetującego hasło
-        await sendPasswordResetEmail(email, resetToken);
-
+        if (process.env.MAIL_ENABLED === 'true') {
+            await sendPasswordResetEmail(email, resetToken);
+        } else {
+            console.log('Email service is disabled');
+        }
         res.status(200).json({ message: 'E-mail resetujący został wysłany' });
     } catch (error) {
         console.error('Error handling password recovery:', error);
