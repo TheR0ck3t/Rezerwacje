@@ -18,16 +18,6 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 1. Utwórz plik `docker-compose.yml` w katalogu głównym projektu i dodaj następującą konfigurację:
     ```yaml
     services:
-      pgadmin:
-        image: dpage/pgadmin4:latest
-        environment:
-          PGADMIN_DEFAULT_EMAIL: admin@admin.com
-          PGADMIN_DEFAULT_PASSWORD: admin
-        ports:
-          - "5050:80"
-        depends_on:
-          - database
-
       database:
         image: postgres:17
         environment:
@@ -72,6 +62,18 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
         depends_on:
           database:
             condition: service_healthy
+
+      # Opcjonalnie można również dodać pgadmina aby ułatwić sobie dostęp do bazy danych poprzez webowe GUI
+      pgadmin:
+        image: dpage/pgadmin4:latest
+        environment:
+          PGADMIN_DEFAULT_EMAIL: admin@admin.com
+          PGADMIN_DEFAULT_PASSWORD: admin
+        ports:
+          - "5050:80"
+        depends_on:
+          - database
+
 
     ```
     Aby wygenerować secrety można użyć np. Generatora tokenów dostępnego na stronie [it-tools.tech](https://it-tools.tech/token-generator)
