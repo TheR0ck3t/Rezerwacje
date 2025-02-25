@@ -73,6 +73,9 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
           - "5050:80"
         depends_on:
           - database
+    volumes:
+      postgres_data:
+
 
 
     ```
