@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 
             startDateSummary.textContent = start.toLocaleString();
             endDateSummary.textContent = end.toLocaleString();
-            totalPriceElement.textContent = `${totalPrice.toFixed(2)} zł`;
+            totalPriceElement.textContent = `${totalPrice.toFixed(2)} PLN`;
 
             reservationSummary.style.display = 'block';
 

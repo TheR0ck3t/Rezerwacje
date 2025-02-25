@@ -5,11 +5,15 @@ document.addEventListener('DOMContentLoaded', async() => {
         const user = response.data;
 
         // Wyświetl imię i nazwisko lub email
-        const userName = user.firstName && user.lastName ?
-            `${user.firstName} ${user.lastName}` :
-            user.email;
+        let userName;
+        if (user.firstName && user.lastName) {
+            userName = `${user.firstName} ${user.lastName}`;
+            localStorage.setItem('userName', userName); // Zapisz do localStorage
+        } else {
+            userName = user.email;
+            localStorage.setItem('userEmail', user.email); // Zapisz email do localStorage jako userEmail
+        }
 
-        localStorage.setItem('userName', userName); // Zapisz do localStorage
         document.getElementById('userName').innerText = userName; // Wyświetl w headerze
     } catch (error) {
         console.error('Error loading user data:', error.response ? error.response.data : error.message);
@@ -21,5 +25,7 @@ document.addEventListener('DOMContentLoaded', async() => {
         document.cookie = 'token=; Max-Age=0; path=/'; // Usuń token
         document.cookie = 'userId=; Max-Age=0; path=/'; // Usuń userId
         window.location.href = '/'; // Przekierowanie na stronę główną
+        localStorage.removeItem('userName'); // Usuń imię i nazwisko z localStorage
+        localStorage.removeItem('userEmail'); // Usuń email z localStorage
     });
 });

@@ -1,4 +1,4 @@
-# [Rezerwacje](https://github.com/TheR0ck3t/Rezerwacje)
+# [Rezerwacje](https://github.com/TheR0ck3t/Rezerwacje/tree/poprawa) 
 
 ## Opis projektu
 Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwację sal konferencyjnych. Aplikacja pozwala na zarządzanie rezerwacjami, przeglądanie dostępnych sal oraz szczegółów rezerwacji. Projekt został stworzony z wykorzystaniem technologii takich jak Node.js, Express, PostgreSQL oraz Bootstrap.
@@ -12,79 +12,107 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
 - Responsywny interfejs użytkownika
 
 ## Wymagania systemowe
-- Node.js (wersja 14.x lub nowsza)
-- PostgreSQL (wersja 12.x lub nowsza)
-- NPM (Node Package Manager)
+- Docker
+  
+## Instalacja za pomocą Docker Compose
+1. Utwórz plik `docker-compose.yml` w katalogu głównym projektu i dodaj następującą konfigurację:
+    ```yaml
+    services:
+      database:
+        image: postgres:17
+        environment:
+          POSTGRES_USER: 
+          POSTGRES_PASSWORD: 
+        ports:
+          - "5432:5432"
+        volumes:
+          - postgres_data:/var/lib/postgresql/data
+        healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U postgres"]
+          interval: 30s
+          timeout: 10s
+          retries: 5
 
-## Instalacja
-1. Sklonuj repozytorium na swój lokalny komputer:
+      rezerwacje:
+        image: krokuduwu/rezerwacje-popr:latest
+        ports:
+          - "3000:3000"
+        environment:
+          - PORT=3000
+          - JWT_SECRET=
+          - ENCRYPTION_KEY=
+          - DB_HOST=database
+          - DB_PORT=5432
+          - DB_NAME=rezerwacje
+          - DB_USER=
+          - DB_PASSWORD=
+          - MAIL_ENABLE=false # True, jeżeli posiadamy jakiś serwer pocztowy
+          - LOAD_TEST_DATA=true # True, jeżeli chcemy załadować przykładowe dane (2 dostepne sale)
+    
+          # Opcjonalna konfiguracja
+          - MAIL_HOST=
+          - MAIL_PORT=
+          - MAIL_SECURE=
+          - MAIL_USERNAME=
+          - MAIL_PASSWORD=
+          - MAIL_FROM=
+          - FRONTEND_URL=
+          - SUPPORT_EMAIL=
+          
+        depends_on:
+          database:
+            condition: service_healthy
+
+      # Opcjonalnie można również dodać pgadmina aby ułatwić sobie dostęp do bazy danych poprzez webowe GUI
+      pgadmin:
+        image: dpage/pgadmin4:latest
+        environment:
+          PGADMIN_DEFAULT_EMAIL: admin@admin.com
+          PGADMIN_DEFAULT_PASSWORD: admin
+        ports:
+          - "5050:80"
+        depends_on:
+          - database
+    volumes:
+      postgres_data:
+
+
+
+    ```
+    Aby wygenerować secrety można użyć np. Generatora tokenów dostępnego na stronie [it-tools.tech](https://it-tools.tech/token-generator)
+   
+3. Uruchom Docker Compose:
     ```sh
-    git clone https://github.com/TheR0ck3t/Rezerwacje.git
+    docker-compose up
     ```
-2. Przejdź do katalogu projektu:
-    ```sh
-    cd Rezerwacje
-    ```
-3. Zainstaluj wymagane zależności:
-    ```sh
-    npm install
-    ```
-
-## Konfiguracja
-1. Utwórz plik [.env](https://www.npmjs.com/package/dotenv) w katalogu głównym projektu i dodaj następujące zmienne środowiskowe:
-    ```env
-    # App config
-    PORT=3000 # Port, na którym będzie działał serwer
-    JWT_SECRET=your_jwt_secret # Sekret do uwierzytelniania JWT
-    ENCRYPTION_KEY=your_encryption_key # Klucz szyfrowania do szyfrowania wrażliwych danych
-
-    # Database config
-    DB_HOST=localhost # Host bazy danych
-    DB_PORT=5432 # Port, na którym działa serwer bazy danych
-    DB_NAME=rezerwacje # Nazwa bazy danych
-    DB_USER=your_db_user # Nazwa użytkownika bazy danych
-    DB_PASSWORD=your_db_password # Hasło użytkownika bazy danych
-
-    # Mailing config
-    MAIL_HOST=smtp.mailersend.net # Host serwera pocztowego
-    MAIL_PORT=587 # 587 dla TLS lub 465 dla SSL
-    MAIL_SECURE=false # Bezpieczne połączenie z serwerem pocztowym (domyślnie dla portu 587: false) lub true, jeśli MAIL_PORT=465
-    MAIL_USERNAME=your_mail_username # Nazwa użytkownika serwera pocztowego
-    MAIL_PASSWORD=your_mail_password # Hasło użytkownika serwera pocztowego
-    MAIL_FROM=Rezerwacje <your_mail@example.com> # Adres e-mail, z którego będą wysyłane wiadomości
-
-    # Email templates
-    FRONTEND_URL=http://localhost:3000 # URL aplikacji frontendowej
-    SUPPORT_EMAIL=support@example.com # Adres e-mail wsparcia
-    ```
-    ### Konfiguracja maila może różnić się w zależności od dostawycy usługi, system testowany był za pomocą [MailerSend](https://www.mailersend.com/)
-
-## Uruchomienie i wgrywanie testowych danych
-1. Uruchom serwer aplikacji:
-    ```sh
-    npm start
-    ```
-2. Podczas uruchamiania serwera aplikacja najpierw sprawdzi swoje połączenie z serwerem bazy danych, a następnie sprawdzi, czy baza danych istnieje. Jeśli baza danych nie istnieje, aplikacja utworzy nową bazę danych o nazwie określonej w konfiguracji (`dbConfig.database`). Następnie zostaniesz zapytany, czy chcesz wgrać testowe dane do bazy danych. Odpowiedz `Y`, aby wgrać testowe dane, lub `N`, aby pominąć ten krok.
-
-3. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
+4. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
 
 ## Dodawanie własnych danych dotyczących pokojów
 1. Aby dodać własne dane dotyczące pokojów do bazy danych, możesz użyć poniższego przykładowego zapytania SQL. Struktura JSON dla danych dotyczących pokojów powinna wyglądać następująco:
     ```sql
     INSERT INTO rooms (capacity, details, price_per_1h) VALUES (
-        50 -- Pojemność sali
-    , '{
-        "name": "Sala Konferencyjna 1",         -- Nazwa sali
-        "images": [                             -- Zdjęcia przedstawiające dane miejsce
+        50,
+    '{
+        "name": "Sala Konferencyjna 1",
+        "images": [
             "/res/rooms/1/image1.jpg", 
             "/res/rooms/1/image2.jpg"
         ],
-        "location": "Warszawa, ul. Przykładowa 10", -- Lokalizacja
-        "description": "Elegancka sala konferencyjna wyposażona w sprzęt multimedialny." -- Opis
+        "location": "Warszawa, ul. Przykładowa 10",
+        "description": "Elegancka sala konferencyjna wyposażona w sprzęt multimedialny." 
     }',
-    150 -- Cena za godzinę
+    150
     );
     ```
+       
+- `capacity`: Pojemność sali, czyli maksymalna liczba osób, które mogą przebywać w sali.
+- `details`: Szczegóły dotyczące sali, zapisane w formacie JSON. Zawiera takie informacje jak:
+  - `name`: Nazwa sali.
+  - `images`: Lista URL-i do zdjęć przedstawiających dane miejsce.
+  - `location`: Lokalizacja sali.
+  - `description`: Opis sali, zawierający informacje o wyposażeniu i innych cechach.
+- `price_per_1h`: Cena za godzinę wynajmu sali.
+
 2. Struktura folderów ze zdjęciami pokoi powinna wyglądać następująco:
     ```
     /res/rooms/
@@ -98,18 +126,22 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
     ```
     Upewnij się, że zdjęcia pokoi są umieszczone w odpowiednich folderach zgodnie z powyższą strukturą.
 
+
+   
+
 ## Struktura projektu
-- [src](https://github.com/TheR0ck3t/Rezerwacje/tree/main/src) - Główny katalog źródłowy projektu
+- [src](https://github.com/TheR0ck3t/Rezerwacje/tree/poprawa/src) - Główny katalog źródłowy projektu
   - `.public/` - Pliki statyczne (CSS, JS, obrazy)
   - `modules/` - Middleware, error handler oraz moduł szyfrowania
   - `routes/` - Definicje tras
   - `services/` - Mailing
   - `views/` - Szablony widoków (pliki .ejs)
-- `migrations/` - Pliki migracji bazy danych
-- `seeds/` - Pliki seeda do wprowadzania danych testowych
-- [README.md](https://github.com/TheR0ck3t/Rezerwacje/blob/main/README.md) - Dokumentacja projektu
+- [migrations](https://github.com/TheR0ck3t/Rezerwacje/tree/poprawa/migrations) - Pliki migracji bazy danych
+- [seeds](https://github.com/TheR0ck3t/Rezerwacje/tree/poprawa/seeds) - Pliki seeda do wprowadzania danych testowych
+- [README.md](https://github.com/TheR0ck3t/Rezerwacje/blob/poprawa/README.md) - Dokumentacja projektu
 
 ## Technologie
+- Docker
 - Node.js
 - Express
 - PostgreSQL

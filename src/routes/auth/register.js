@@ -28,18 +28,26 @@ router.post('/', async(req, res) => {
         const newUser = await db.one('INSERT INTO users(email, password, is_active) VALUES($1, $2, $3) RETURNING id', [email, hashedPassword, false]);
         console.log(newUser);
 
-        // Generowanie tokena weryfikacyjnegon
+        // Generowanie tokena weryfikacyjnego
         const verificationToken = jwt.sign({ id: newUser.id, email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Wysyłanie maila weryfikacyjnego
-        try {
-            await sendVerificationEmail(email, verificationToken);
-        } catch (err) {
-            console.error('Error sending verification email:', err);
-            return res.status(500).json({ error: 'Failed to send verification email' });
+        let mailEnabled = false;
+        if (process.env.MAIL_ENABLED === 'true') {
+            mailEnabled = true;
+            // Wysyłanie maila weryfikacyjnego
+            try {
+                await sendVerificationEmail(email, verificationToken);
+            } catch (err) {
+                console.error('Error sending verification email:', err);
+                return res.status(500).json({ error: 'Failed to send verification email' });
+            }
+        } else {
+            console.log('Verification email not sent because MAIL_ENABLED is set to false');
+            // Ustawienie konta jako aktywne
+            await db.query('UPDATE users SET is_active = $1 WHERE id = $2', [true, newUser.id]);
         }
 
-        return res.status(200).json({ message: 'User registered successfully. Verification email sent.', newUser });
+        return res.status(200).json({ message: 'User registered successfully.', mailEnabled, newUser });
     } catch (error) {
         console.error('Error registering user:', error);
         return res.status(500).json({ error: 'Something went wrong' });
