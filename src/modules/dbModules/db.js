@@ -18,6 +18,7 @@ const db = pgp(dbConfig);
 const serverDb = pgp({
     host: dbConfig.host,
     port: dbConfig.port,
+    database: dbConfig.database,
     user: dbConfig.user,
     password: dbConfig.password
 });
