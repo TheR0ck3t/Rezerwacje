@@ -46,7 +46,7 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
           - DB_NAME=rezerwacje
           - DB_USER=
           - DB_PASSWORD=
-          - MAIL_ENABLE=false # True, jeżeli posiadamy jakiś serwer pocztowy np smtp.mailer
+          - MAIL_ENABLE=false # True, jeżeli posiadamy jakiś serwer pocztowy
           - LOAD_TEST_DATA=true
     
           # Opcjonalna konfiguracja
