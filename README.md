@@ -75,9 +75,6 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
           - database
     volumes:
       postgres_data:
-
-
-
     ```
     Aby wygenerować secrety można użyć np. Generatora tokenów dostępnego na stronie [it-tools.tech](https://it-tools.tech/token-generator)
    
@@ -86,6 +83,49 @@ Projekt "Rezerwacje" to aplikacja webowa umożliwiająca użytkownikom rezerwacj
     docker-compose up
     ```
 4. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
+
+## Instalacja za pomocą GitHub i npm
+1. Sklonuj repozytorium:
+    ```sh
+    git clone https://github.com/TheR0ck3t/Rezerwacje.git
+    cd Rezerwacje
+    ```
+
+2. Zainstaluj zależności:
+    ```sh
+    npm install
+    ```
+
+3. Skonfiguruj plik `.env` z odpowiednimi zmiennymi środowiskowymi:
+    ```env
+    PORT=3000
+    JWT_SECRET=your_jwt_secret
+    ENCRYPTION_KEY=your_encryption_key
+    DB_HOST=your_database_host
+    DB_PORT=5432
+    DB_NAME=rezerwacje
+    DB_USER=your_database_user
+    DB_PASSWORD=your_database_password
+    MAIL_ENABLE=false # True, jeżeli posiadamy jakiś serwer pocztowy
+    LOAD_TEST_DATA=true # True, jeżeli chcemy załadować przykładowe dane (2 dostępne sale)
+    
+    # Opcjonalna konfiguracja
+    MAIL_HOST=
+    MAIL_PORT=
+    MAIL_SECURE=
+    MAIL_USERNAME=
+    MAIL_PASSWORD=
+    MAIL_FROM=
+    FRONTEND_URL=
+    SUPPORT_EMAIL=
+    ```
+
+4. Uruchom aplikację:
+    ```sh
+    npm start
+    ```
+
+5. Otwórz przeglądarkę i przejdź do adresu `http://localhost:3000`, aby uzyskać dostęp do aplikacji.
 
 ## Dodawanie własnych danych dotyczących pokojów
 1. Aby dodać własne dane dotyczące pokojów do bazy danych, możesz użyć poniższego przykładowego zapytania SQL. Struktura JSON dla danych dotyczących pokojów powinna wyglądać następująco:
